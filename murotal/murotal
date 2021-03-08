@@ -1,0 +1,93 @@
+#!/usr/bin/php
+<?php
+$vaProsess = shell_exec("pgrep -l -f -a murotal");
+$vaProsess = explode("\n", $vaProsess);
+$nProsess = 0;
+foreach ($vaProsess as $value) {
+  if (trim($value) !== "" && strpos($value, "sh -c") === false) {
+    $nProsess++;
+  }
+}
+if ($nProsess > 1) {
+  echo ("Aplikasi Sudah Berjalan ....\n");
+  die();
+}
+
+$path = realpath($_SERVER['HOME'] . "/MP3/Alafasy");
+
+// Ambil File MP3
+$vaMP3 = array();
+getMP3_File($vaMP3, $path);
+file_put_contents(GetData("mp3.json"), json_encode($vaMP3));
+
+// Ambil Posisi Terakhir
+$i = "";
+$cFileAyat = GetData("ayat.txt");
+if (is_file($cFileAyat)) {
+  $i = file_get_contents($cFileAyat);
+  $va = json_decode($i, true);
+  if (isset($va["ayat"])) {
+    $i = $va["ayat"];
+  }
+}
+if (!isset($vaMP3[$i])) {
+  $i = "";
+}
+
+// Putar Murotal
+while (true) {
+  foreach ($vaMP3 as $key => $file) {
+    if ($i !== "") {
+      if ($key == $i) $i = "";
+    }
+
+    if ($i == "") {
+      CheckStatus();
+      $vaData = ["ayat" => $key, "datetime" => time()];
+      file_put_contents(GetData("ayat.txt"), json_encode($vaData));
+
+      $cExec = "cvlc --play-and-exit '$key'";
+      exec($cExec);
+    }
+  }
+  $i = "";
+}
+
+function CheckStatus()
+{
+  $cStatus = "stop";
+  $cFile = GetData("status.txt");
+  while (strpos($cStatus, "stop") !== false) {
+    if (is_file($cFile)) {
+      $cStatus = file_get_contents($cFile);
+    } else {
+      $cStatus = "start";
+    }
+
+    if (strpos($cStatus, "stop") !== false) {
+      sleep(5);
+    }
+  }
+}
+
+function getMP3_File(&$vaMP3, $path)
+{
+  $vaDir = scandir($path);
+  foreach ($vaDir as $file) {
+    if (substr($file, 0, 1) !== ".") {
+      if (is_dir("$path/$file")) {
+        getMP3_File($vaMP3, "$path/$file");
+      } else {
+        $ext = pathinfo($file, PATHINFO_EXTENSION);
+        if (strtolower($ext) == "mp3") {
+          $vaMP3["$path/$file"] = 1;
+        }
+      }
+    }
+  }
+}
+
+function GetData($cFile = "")
+{
+  return dirname(__DIR__) . "/data/$cFile";
+}
