@@ -29,10 +29,14 @@ $nMaghrib_Volume = isset($va["nMaghrib_Volume"]) ? $va["nMaghrib_Volume"] : 100;
 $nIsya_Volume = isset($va["nIsya_Volume"]) ? $va["nIsya_Volume"] : 100;
 $nMurotal_Volume = isset($va["nMurotal_Volume"]) ? $va["nMurotal_Volume"] : 60;
 
+$nHijriah = isset($va["nHijriah"]) ? $va["nHijriah"] : 0;
+
 $nTimeZone = isset($va["nTimeZone"]) ? $va["nTimeZone"] : 7;
 $cKoordinat = isset($va["cKoordinat"]) ? $va["cKoordinat"] : "-7.938679, 112.659707";
 $lYa = isset($va["nMatikanMurotalMalam"]) ? $va["nMatikanMurotalMalam"] == "Y" : true;
 $Reload = isset($va["Reload"]) ? $va["Reload"] : "0";
+
+$hijri = new HijriDate($nHijriah); //Wajib ada
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,12 +78,21 @@ $Reload = isset($va["Reload"]) ? $va["Reload"] : "0";
         </td>
       </tr>
       <tr>
+        <td>Tgl. Hijriah</td>
+        <td width="5px">:</td>
+        <td>
+          <input type="number" name="nHijriah" value="<?= $nHijriah ?>" class="numCfg"> Hari -
+          (<?= $hijri->get_date($nHijriah) ?>)
+        </td>
+      </tr>
+      <tr>
         <td>Lama Adzan</td>
         <td width="5px">:</td>
         <td>
           <input type="number" name="nLamaAdzan" value="<?= $nLamaAdzan ?>" class="numCfg"> Menit
         </td>
       </tr>
+
       <tr>
         <td colspan="3" class="cellHeader">
           :: ATUR WAKTU SHOLAT ( MENIT )

@@ -19,6 +19,12 @@ function CheckConfig()
       $vaData["Reload"] = "0";
       file_put_contents($cFileConfig, json_encode($vaData));
     }
+
+    // Ambil Tanggal Hijriah Tambahkan Ke vaData biar dikirim ke client
+    $hijri = new HijriDate(GetConfig("nHijriah", 0));
+    $vaData['hijriah'] = $hijri->get_date();
+
+    $cData = json_encode($vaData);
   }
   echo ($cData);
 }
@@ -95,7 +101,7 @@ function TerbitStart()
 function CheckAyat()
 {
   $cFile = GetData("ayat.txt");
-  $cData = "";
+  $vaData = ["ayat" => ""];
   if (is_file($cFile)) {
     $va = json_decode(file_get_contents($cFile), true);
     if (isset($va["ayat"])) {
@@ -107,10 +113,10 @@ function CheckAyat()
       $va["ayat"] = dirname($va["ayat"]);
       $cSurat = basename($va["ayat"]);
 
-      $cData = "$cSurat - $cAyat / " . TotalAyat($nSurat);
+      $vaData["ayat"] = "$cSurat - $cAyat / " . TotalAyat($nSurat);
     }
   }
-  echo ($cData);
+  echo (json_encode($vaData));
 }
 
 function TotalAyat($nSurat)

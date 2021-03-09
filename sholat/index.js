@@ -43,11 +43,6 @@ function SaveCfg(key, value) {
 
 function jadwalSholat() {
   var date = new Date();
-  var vaHari = ["Ahad", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"];
-  var vaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-
-  var c = vaHari[date.getDay()] + ", " + addZero(date.getDate()) + " " + vaBulan[date.getMonth()] + " " + date.getFullYear().toString();
-  _id("cellTanggal").innerText = c;
 
   prayTimes.setMethod("INDONESIA");
   var vaKoordinat = GetCfg("cKoordinat", "0,0").split(",");
@@ -240,6 +235,9 @@ function showTime() {
       }
       nLamaAdzan = Math.floor(GetCfg("nLamaAdzan", 3));
       jadwalSholat();
+
+      // Tampilkan Hari Dan Tanggal
+      GetNamaHari(d);
     });
   }
 
@@ -268,10 +266,27 @@ function showTime() {
   // Setiap 5 detik sekali jalankan ajax cek ayat yang sedang di baca
   if (d.getSeconds() % 5 == 0) {
     ajax("", "CheckAyat", "", function (cData) {
+      var vaData = JSON.parse(cData);
       var cell = _id("cellSurat");
       if (cell !== null) {
-        cell.innerHTML = "Murotal : " + cData;
+        cell.innerHTML = vaData.ayat;
       }
     });
+    GetNamaHari(d);
   }
+}
+
+var lHijriah = false;
+function GetNamaHari(d) {
+  var vaHari = ["Ahad", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"];
+  var vaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+  var c = vaHari[d.getDay()] + ", ";
+  lHijriah = !lHijriah;
+  if (lHijriah) {
+    c += GetCfg("hijriah", "");
+  } else {
+    c += addZero(d.getDate()) + " " + vaBulan[d.getMonth()] + " " + d.getFullYear().toString();
+  }
+  _id("cellTanggal").innerText = c;
 }
