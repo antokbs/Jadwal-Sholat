@@ -55,8 +55,12 @@ function AdzanStart($va)
 function playMP3($cFile)
 {
   if (is_file($cFile)) {
-    echo ("File Ketemu : $cFile \n");
-    shell_exec("cvlc '$cFile' > /dev/null 2>/dev/null &");
+    if (isset($_SERVER["HTTP_HOST"]) && strpos($_SERVER["HTTP_HOST"], "localhost") !== false) {
+      echo ("File Ketemu : $cFile \n");
+      shell_exec("cvlc --play-and-exit '$cFile' > /dev/null 2>/dev/null &");
+    } else {
+      echo ("File hanya bisa di akses dari localhost");
+    }
   } else {
     echo ("File tidak Ketemu\n");
   }
