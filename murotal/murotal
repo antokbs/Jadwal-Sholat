@@ -18,13 +18,13 @@ PlayMurotal();
 function PlayMurotal()
 {
   // Ambil Posisi Terakhir
-  $i = "";
+  $cAyatTerakhir = "";
   $cFileAyat = GetData("ayat.txt");
   if (is_file($cFileAyat)) {
-    $i = file_get_contents($cFileAyat);
-    $va = json_decode($i, true);
+    $cAyatTerakhir = file_get_contents($cFileAyat);
+    $va = json_decode($cAyatTerakhir, true);
     if (isset($va["ayat"])) {
-      $i = $va["ayat"];
+      $cAyatTerakhir = $va["ayat"];
     }
   }
 
@@ -41,11 +41,9 @@ function PlayMurotal()
           foreach ($vaAyat as $ayat) {
             $mp3 = "$path/$surat/$ayat";
             if (is_file($mp3)) {
-              if ($i !== "") {
-                if ($mp3 == $i) $i = "";
-              }
+              if ($cAyatTerakhir !== "" && $mp3 == $cAyatTerakhir) $cAyatTerakhir = "";
 
-              if ($i == "") {
+              if ($cAyatTerakhir == "") {
                 CheckStatus();
                 $vaData = ["ayat" => $mp3, "datetime" => time()];
                 file_put_contents(GetData("ayat.txt"), json_encode($vaData));
@@ -57,7 +55,7 @@ function PlayMurotal()
           }
         }
       }
-      $i = "";
+      $cAyatTerakhir = "";
     }
   } else {
     die("Folder Tidak Ditemukan ...");
