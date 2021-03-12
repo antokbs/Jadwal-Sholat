@@ -2,7 +2,7 @@ body {FONT-FAMILY: Verdana,Helvetica;background-color: black;}
 .mainTable {height:320px;width:100%;color: white;padding: 0px; margin: 0px;line-height: 100%}
 .cellTanggal {height:10px;font-size: 30px;padding-top: 6px;}
 .cellJam {font-size: 100px;font-weight: 900;text-align: center;vertical-align: middle;height:10px;line-height: 100%;}
-.cellWaktu {text-align: center;font-weight: 700;border-top:1px solid white;font-size: 18px;color:rgb(75, 72, 72)}
+.cellWaktu {text-align: center;font-weight: 700;border-top:1px solid white;font-size: 18px;color:rgb(163, 163, 163)}
 .cellWaktuNext {color:white}
 .cellJadwal {text-align: center;font-size: 30px;font-weight: 700;color:rgb(245, 154, 89);padding: 0px}
 .cellJadwalNext {color:white}

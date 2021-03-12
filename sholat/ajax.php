@@ -15,16 +15,18 @@ function CheckConfig()
     $cData = file_get_contents($cFileConfig);
 
     $vaData = json_decode($cData, true);
-    if (isset($vaData["Reload"]) && $vaData["Reload"] == "1") {
-      $vaData["Reload"] = "0";
-      file_put_contents($cFileConfig, json_encode($vaData));
-    }
 
     // Ambil Tanggal Hijriah Tambahkan Ke vaData biar dikirim ke client
     $hijri = new HijriDate(GetConfig("nHijriah", 0));
     $vaData['hijriah'] = $hijri->get_date();
 
     $cData = json_encode($vaData);
+
+    // Reload Kita Ganti menjadi 0 biar tidak refresh terus menerus
+    if (isset($vaData["Reload"]) && $vaData["Reload"] == "1") {
+      $vaData["Reload"] = "0";
+      file_put_contents($cFileConfig, json_encode($vaData));
+    }
   }
   echo ($cData);
 }

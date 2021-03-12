@@ -229,15 +229,16 @@ function showTime() {
         SaveCfg(k, va[k]);
       }
 
-      if (GetCfg("Reload", "0") == "1") {
-        console.log("Reload");
-        ReloadPage();
-      }
       nLamaAdzan = Math.floor(GetCfg("nLamaAdzan", 3));
       jadwalSholat();
 
       // Tampilkan Hari Dan Tanggal
       GetNamaHari(d);
+
+      if (GetCfg("Reload", "0") == "1") {
+        console.log("Reload");
+        ReloadPage();
+      }
     });
   }
 
