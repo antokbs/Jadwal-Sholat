@@ -11,9 +11,7 @@ Cara Installasi :
 4. Tambahkan Perintah
 
     @lxpanel --profile LXDE-pi
-
     @pcmanfm --desktop --profile LXDE-pi
-
     @xscreensaver -no-splash
 
     # Jalankan Chromium Browser Mode Normal
