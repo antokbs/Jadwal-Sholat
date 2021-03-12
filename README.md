@@ -8,12 +8,12 @@ Cara Installasi :
 3. Startup Jadwal Sholat dengan membuka Browser Chromium pada Startup
     nano ~/.config/lxsession/LXDE-pi/autostart
 
-4. Tambahkan Perintah 
+4. Tambahkan Perintah
 
     @lxpanel --profile LXDE-pi
 
     @pcmanfm --desktop --profile LXDE-pi
-    
+
     @xscreensaver -no-splash
 
     # Jalankan Chromium Browser Mode Normal
