@@ -3,15 +3,19 @@ Cara Installasi :
 2. Buat Service yang akan di jalankan pada saat start pada file /home/pi/.bashrc tambahkan baris
 
    /home/pi/apps/murotal/murotal > /dev/null 2>/dev/null &
+
    php -S 0.0.0.0:8080 -t /home/pi/apps/
 
 3. Startup Jadwal Sholat dengan membuka Browser Chromium pada Startup
+
     nano ~/.config/lxsession/LXDE-pi/autostart
 
 4. Tambahkan Perintah
 
     @lxpanel --profile LXDE-pi
+
     @pcmanfm --desktop --profile LXDE-pi
+
     @xscreensaver -no-splash
 
     # Jalankan Chromium Browser Mode Normal
