@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/hijridate.php" ;
+require_once __DIR__ . "/hijridate.php";
 
 function GetURL()
 {
@@ -12,4 +12,16 @@ function GetURL()
 function GetData($cFile = "")
 {
   return $_SERVER['DOCUMENT_ROOT'] . "/data/$cFile";
+}
+
+function GetConfig($cKey, $default = "")
+{
+  $cFileConfig = GetData("config.json");
+  $vaData = [];
+  if (is_file($cFileConfig)) {
+    $vaData = json_decode(file_get_contents($cFileConfig), true);
+  }
+
+  $default = isset($vaData[$cKey]) ? $vaData[$cKey] : $default;
+  return $default;
 }

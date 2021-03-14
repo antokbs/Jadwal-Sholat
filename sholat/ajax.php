@@ -31,18 +31,6 @@ function CheckConfig()
   echo ($cData);
 }
 
-function GetConfig($cKey, $default = "")
-{
-  $cFileConfig = GetData("config.json");
-  $vaData = [];
-  if (is_file($cFileConfig)) {
-    $vaData = json_decode(file_get_contents($cFileConfig), true);
-  }
-
-  $default = isset($vaData[$cKey]) ? $vaData[$cKey] : $default;
-  return $default;
-}
-
 function AdzanStart($va)
 {
   // Naikan Volume Ke 100%
