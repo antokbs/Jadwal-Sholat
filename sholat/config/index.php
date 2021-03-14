@@ -81,7 +81,7 @@ $hijri = new HijriDate($nHijriah); //Wajib ada
         <td width="5px">:</td>
         <td>
           <input type="number" name="nHijriah" value="<?= $nHijriah ?>" class="numCfg"> Hari -
-          (<?= $hijri->get_date($nHijriah) ?>) <a href="<?= $url ?>calendar.php" target="_new">Open Calendar</a>
+          (<?= $hijri->get_date() ?>) <a href="<?= $url ?>calendar.php" target="_new">Open Calendar</a>
         </td>
       </tr>
       <tr>

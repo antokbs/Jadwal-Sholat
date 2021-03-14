@@ -14,16 +14,19 @@ class HijriDate
    */
   const mjd_factor = 2400000;
 
+  private $nDay = 0;
   public function __construct($nDay = 0)
   {
     $nTime = time();
+    $this->nDay = $nDay;
     $this->hijri = $this->GregorianToHijri($nTime, $nDay);
   }
 
   public function get_date($nTime = 0, $nDay = 0)
   {
     if ($nTime == 0) $nTime = time();
-    $this->hijri = $this->GregorianToHijri($nTime, $nDay);
+    if ($nDay !== 0) $this->nDay = $nDay;
+    $this->hijri = $this->GregorianToHijri($nTime, $this->nDay);
     return $this->hijri[1] . ' ' . $this->get_month_name($this->hijri[0]) . ' ' . $this->hijri[2] . 'H';
   }
 
