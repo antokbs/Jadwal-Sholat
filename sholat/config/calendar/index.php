@@ -47,11 +47,19 @@ $vaBulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
   .divH {
     color: darkgreen;
     font-weight: bolder;
+    cursor: default;
+    padding: 2px 0px 2px 0px;
+  }
+
+  .divH:hover {
+    background-color: #dedede;
   }
 
   .divM {
     color: darkblue;
     font-weight: bolder;
+    cursor: default;
+    padding: 2px 0px 2px 0px;
   }
 </style>
 
@@ -88,7 +96,7 @@ $vaBulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
       if ($hijri->get_day() == 1 && $cHijriah == "") {
         $cHijriah = $hijri->get_month_name($hijri->get_month()) . " " . $hijri->get_year();
       }
-      $vaRow[$nRow][$vaDate["wday"]] = [$nHari, $hijri->get_day()];
+      $vaRow[$nRow][$vaDate["wday"]] = [$nHari, $hijri->get_day(), $hijri->get_day() . " " . $hijri->get_month_name($hijri->get_month()) . " " . $hijri->get_year()];
 
       if ($vaDate["wday"] == 6 && $nHari < $nEnd) {
         $vaRow[++$nRow] = [["", ""], ["", ""], ["", ""], ["", ""], ["", ""], ["", ""], ["", ""]];
@@ -119,31 +127,31 @@ $vaBulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
         <tr>
           <td class="cellHari <?= GetTglClass($cal[0], $nBulan, $nTahun) ?>">
             <div class="divM"><?= $cal[0][0] ?></div>
-            <div class="divH"><?= $cal[0][1] ?></div>
+            <div class="divH" <?= GetTitle($cal[0]) ?>><?= $cal[0][1] ?></div>
           </td>
           <td class="cellHari <?= GetTglClass($cal[1], $nBulan, $nTahun) ?>">
             <div class="divM"><?= $cal[1][0] ?></div>
-            <div class="divH"><?= $cal[1][1] ?></div>
+            <div class="divH" <?= GetTitle($cal[1]) ?>><?= $cal[1][1] ?></div>
           </td>
           <td class="cellHari <?= GetTglClass($cal[2], $nBulan, $nTahun) ?>">
             <div class="divM"><?= $cal[2][0] ?></div>
-            <div class="divH"><?= $cal[2][1] ?></div>
+            <div class="divH" <?= GetTitle($cal[2]) ?>><?= $cal[2][1] ?></div>
           </td>
           <td class="cellHari <?= GetTglClass($cal[3], $nBulan, $nTahun) ?>">
             <div class="divM"><?= $cal[3][0] ?></div>
-            <div class="divH"><?= $cal[3][1] ?></div>
+            <div class="divH" <?= GetTitle($cal[3]) ?>><?= $cal[3][1] ?></div>
           </td>
           <td class="cellHari <?= GetTglClass($cal[4], $nBulan, $nTahun) ?>">
             <div class="divM"><?= $cal[4][0] ?></div>
-            <div class="divH"><?= $cal[4][1] ?></div>
+            <div class="divH" <?= GetTitle($cal[4]) ?>><?= $cal[4][1] ?></div>
           </td>
           <td class="cellHari <?= GetTglClass($cal[5], $nBulan, $nTahun) ?>">
             <div class="divM"><?= $cal[5][0] ?></div>
-            <div class="divH"><?= $cal[5][1] ?></div>
+            <div class="divH" <?= GetTitle($cal[5]) ?>><?= $cal[5][1] ?></div>
           </td>
           <td class="cellHari <?= GetTglClass($cal[6], $nBulan, $nTahun) ?>">
             <div class="divM"><?= $cal[6][0] ?></div>
-            <div class="divH"><?= $cal[6][1] ?></div>
+            <div class="divH" <?= GetTitle($cal[6]) ?>><?= $cal[6][1] ?></div>
           </td>
         </tr>
       <?php
@@ -165,6 +173,11 @@ function GetTglClass($cal, $nBulan, $nTahun)
   // Kalau Hari ini
   if (date("Y-m-d", time()) == date("Y-m-d", mktime(0, 0, 0, $nBulan, $cal[0], $nTahun))) $cRetval = " cellHariIni ";
   return $cRetval;
+}
+
+function GetTitle($cal)
+{
+  return isset($cal[2]) ? " title=\"{$cal[2]}\" " : "";
 }
 ?>
 
