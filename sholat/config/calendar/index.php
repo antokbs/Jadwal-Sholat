@@ -1,11 +1,10 @@
 <?php
-require_once "../include/system.php";
+require_once "../../include/system.php";
 
 $nHijriah = GetConfig("nHijriah", 0);
 $hijri = new HijriDate($nHijriah); //Wajib ada
-$nTahun = 2021;
+$nTahun = isset($_POST["nTahun"]) ? $_POST["nTahun"] : date("Y");
 $vaBulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +15,7 @@ $vaBulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calendar</title>
 </head>
-<style>
+<style type="text/css">
   .cellBulan {
     border: 1px solid #aaaaaa;
     text-align: center;
@@ -37,6 +36,14 @@ $vaBulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
     width: 60px;
   }
 
+  .cellHari1 {
+    background-color: rgb(252, 184, 184);
+  }
+
+  .cellHariIni {
+    background-color: rgb(162, 225, 247);
+  }
+
   .divH {
     color: darkgreen;
     font-weight: bolder;
@@ -49,6 +56,18 @@ $vaBulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
 </style>
 
 <body>
+  <form name="form1" action="" method="POST">
+    Tahun :
+    <select name="nTahun" onchange="document.form1.submit();">
+      <?php
+      for ($n = 2020; $n <= date("Y") + 5; $n++) {
+        $cSelected = "";
+        if ($n == $nTahun) $cSelected = "selected";
+        echo ("<option $cSelected value='$n'>$n</option>");
+      }
+      ?>
+    </select>
+  </form>
   <?php
   for ($nBulan = 1; $nBulan <= 12; $nBulan++) :
     $nEnd = date("d", mktime(0, 0, 0, $nBulan + 1, 0, $nTahun));
@@ -56,11 +75,16 @@ $vaBulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
     $vaRow = [];
     $vaRow[$nRow] = [["", ""], ["", ""], ["", ""], ["", ""], ["", ""], ["", ""], ["", ""]];
     $cHijriah = "";
+    $cHijriahAwal = "";
     for ($nHari = 1; $nHari <= $nEnd; $nHari++) {
       $nTime = mktime(0, 0, 0, $nBulan, $nHari, $nTahun);
       $vaDate = getdate($nTime);
 
       $hijri->get_date($nTime, $nHijriah);
+      if ($nHari == 1) {
+        $cHijriahAwal = $hijri->get_month_name($hijri->get_month()) . " " . $hijri->get_year();
+      }
+
       if ($hijri->get_day() == 1 && $cHijriah == "") {
         $cHijriah = $hijri->get_month_name($hijri->get_month()) . " " . $hijri->get_year();
       }
@@ -71,12 +95,14 @@ $vaBulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
       }
     }
     if ($cHijriah == "") {
-      $cHijriah = $hijri->get_month_name($hijri->get_month()) . " " . $hijri->get_year();
+      $cHijriah = $cHijriahAwal;
+    } else {
+      $cHijriah = "$cHijriahAwal - $cHijriah";
     }
   ?>
     <table style="margin-top: 5px;">
       <tr>
-        <td colspan="7" class="cellBulan"><?= $vaBulan[$nBulan - 1] . " " . $nTahun . " - $cHijriah" ?></td>
+        <td colspan="7" class="cellBulan"><?= $vaBulan[$nBulan - 1] . " " . $nTahun . "<br>$cHijriah" ?></td>
       </tr>
       <tr>
         <td class="cellMinggu">Ahad</td>
@@ -91,31 +117,31 @@ $vaBulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
       foreach ($vaRow as $cal) :
       ?>
         <tr>
-          <td class="cellHari">
+          <td class="cellHari <?= GetTglClass($cal[0], $nBulan, $nTahun) ?>">
             <div class="divM"><?= $cal[0][0] ?></div>
             <div class="divH"><?= $cal[0][1] ?></div>
           </td>
-          <td class="cellHari">
+          <td class="cellHari <?= GetTglClass($cal[1], $nBulan, $nTahun) ?>">
             <div class="divM"><?= $cal[1][0] ?></div>
             <div class="divH"><?= $cal[1][1] ?></div>
           </td>
-          <td class="cellHari">
+          <td class="cellHari <?= GetTglClass($cal[2], $nBulan, $nTahun) ?>">
             <div class="divM"><?= $cal[2][0] ?></div>
             <div class="divH"><?= $cal[2][1] ?></div>
           </td>
-          <td class="cellHari">
+          <td class="cellHari <?= GetTglClass($cal[3], $nBulan, $nTahun) ?>">
             <div class="divM"><?= $cal[3][0] ?></div>
             <div class="divH"><?= $cal[3][1] ?></div>
           </td>
-          <td class="cellHari">
+          <td class="cellHari <?= GetTglClass($cal[4], $nBulan, $nTahun) ?>">
             <div class="divM"><?= $cal[4][0] ?></div>
             <div class="divH"><?= $cal[4][1] ?></div>
           </td>
-          <td class="cellHari">
+          <td class="cellHari <?= GetTglClass($cal[5], $nBulan, $nTahun) ?>">
             <div class="divM"><?= $cal[5][0] ?></div>
             <div class="divH"><?= $cal[5][1] ?></div>
           </td>
-          <td class="cellHari">
+          <td class="cellHari <?= GetTglClass($cal[6], $nBulan, $nTahun) ?>">
             <div class="divM"><?= $cal[6][0] ?></div>
             <div class="divH"><?= $cal[6][1] ?></div>
           </td>
@@ -128,5 +154,18 @@ $vaBulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
   endfor;
   ?>
 </body>
+<?php
+function GetTglClass($cal, $nBulan, $nTahun)
+{
+  $cRetval = "";
+
+  // Tanggal 1 Hijriah
+  if ($cal[1] == 1) $cRetval = " cellHari1 ";
+
+  // Kalau Hari ini
+  if (date("Y-m-d", time()) == date("Y-m-d", mktime(0, 0, 0, $nBulan, $cal[0], $nTahun))) $cRetval = " cellHariIni ";
+  return $cRetval;
+}
+?>
 
 </html>

@@ -95,7 +95,6 @@ class HijriDate
       $y = self::umstartyear + $ii;
       $m = $i - 12 * $ii;
       $d = $mjd - $vaData[$i - 1] + 1;
-      //$hz = $mjd - $vaData[12 * $ii];
     } else {
       $jd = $jd - 1948440 + 10632;
       $n  = (int)(($jd - 1) / 10631);

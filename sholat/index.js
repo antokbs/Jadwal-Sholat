@@ -92,14 +92,14 @@ function StartMurotal(d) {
   2. Terbit + 1 Menit
   */
   for (var key in vaJadwal) {
-    if (key !== "terbit") {
+    if (key !== "terbit" && key !== "subuh" && key !== "maghrib") {
       nStart = vaJadwal[key].adzan + vaJadwal[key].iqomah + nLamaAdzan + nLamaSholat;
-    } else {
+    } else if (key == "terbit") {
       nStart = vaJadwal[key].adzan + 1;
     }
 
     if (nStart == nMenit) {
-      ajax("", "StartMurotal", "", function (cData, nSatus) {
+      ajax("", "StartMurotal", "", function (cData) {
         console.log(cData);
       })
     }
@@ -231,9 +231,6 @@ function showTime() {
 
       nLamaAdzan = Math.floor(GetCfg("nLamaAdzan", 3));
       jadwalSholat();
-
-      // Tampilkan Hari Dan Tanggal
-      GetNamaHari(d);
 
       if (GetCfg("Reload", "0") == "1") {
         console.log("Reload");
