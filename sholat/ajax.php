@@ -76,6 +76,12 @@ function UpdStatusMurotal($cStatus)
   file_put_contents($cFile, $cStatus);
 }
 
+function SholatMalam()
+{
+  echo ("Waktunya Sholat Malam \n");
+  IqomahStart();
+}
+
 function IqomahStart()
 {
   UpdStatusMurotal("stop");

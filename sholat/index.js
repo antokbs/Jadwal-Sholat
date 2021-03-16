@@ -11,6 +11,7 @@ var vaConfig = {};
 var cellJam = null;
 var vaIqomah = { "start": -1, "end": -1, "sholat": "" };
 var nLamaAdzan = 3; // Untuk Waktu Adzan Kita toleransi 3 Menit
+var vaSholatMalam = { "satu": 90, "dua": 60 }; // Untuk Reminder Sholat Malam 1.5 Jam Sebelum Subuh dan 1 Jam Sebelum subuh
 function LoadForm(url) {
   BASE_URL = url;
   showTime();
@@ -77,15 +78,30 @@ function jadwalSholat() {
   }
 
   // Mengatur Warna Tampilan Untuk Jadwal Sholat yang Akan Datang.
-  CheckSholat(date);   // Check Apakah Waktunya Adzan kalau adzan kita putar mp3 adzan.
-  StopMurotal(date);   // Check Waktu Mematikan Murotal.
-  StartMurotal(date);
+  CheckSholat(date);    // Check Apakah Waktunya Adzan kalau adzan kita putar mp3 adzan.
+  StopMurotal(date);    // Check Waktu Mematikan Murotal.
+  StartMurotal(date);   // Check Waktu Menjalankan Murotal
+  CheckSholatMalam(date);
+}
+
+function CheckSholatMalam(d) {
+  var nMenit = (d.getHours() * 60) + d.getMinutes();
+  for (var key in vaSholatMalam) {
+    if (vaSholatMalam[key] !== 0) {
+      if (vaJadwal.subuh.adzan - vaSholatMalam[key] == nMenit) {
+        ajax("", "SholatMalam", "", function (cData) {
+          console.log(cData);
+        })
+      }
+    }
+  }
 }
 
 function StartMurotal(d) {
   var nMenit = (d.getHours() * 60) + d.getMinutes();
   var nLamaSholat = 15; // Sholat Di waktu 15 Menit
   var nStart = -1;
+  var lStart = false;
   /*
   Menjalankan Murotal
   1. Setelah Sholat ( Adzan + Iqomah + LamaAdzan + Lama Sholat)
@@ -98,11 +114,29 @@ function StartMurotal(d) {
       nStart = vaJadwal[key].adzan + 1;
     }
 
-    if (nStart == nMenit) {
-      ajax("", "StartMurotal", "", function (cData) {
-        console.log(cData);
-      })
+    if (nStart == nMenit) lStart = true;
+
+  }
+
+  /*
+  Murotal akan kita jalankan 2 Menit setelah penanda Sholat Malam dengan catatan
+  1. Data Bukan 0
+  2. MatikanmutotalMalam == "T"
+  */
+  if (GetCfg("nMatikanMurotalMalam", "Y") == "T") {
+    for (var key in vaSholatMalam) {
+      if (vaSholatMalam[key] !== 0) {
+        if (vaJadwal.subuh.adzan - vaSholatMalam[key] + 2 == nMenit) {
+          lStart = true;
+        }
+      }
     }
+  }
+
+  if (lStart) {
+    ajax("", "StartMurotal", "", function (cData) {
+      console.log(cData);
+    })
   }
 }
 
@@ -113,6 +147,18 @@ function StopMurotal(d) {
   for (var key in vaJadwal) {
     if (vaJadwal[key].adzan == nMenit) {
       lStop = true;
+    }
+  }
+
+  /* Untuk Pengingat Sholat Malam 
+  1. 1.5 Jam Sebelum subuh
+  2. 1 Jam Sebelum Subuh
+  */
+  for (var key in vaSholatMalam) {
+    if (vaSholatMalam[key] !== 0) {
+      if (vaJadwal.subuh.adzan - vaSholatMalam[key] == nMenit) {
+        lStop = true;
+      }
     }
   }
 
