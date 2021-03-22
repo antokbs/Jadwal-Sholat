@@ -85,7 +85,7 @@ function SholatMalam()
 function IqomahStart()
 {
   UpdStatusMurotal("stop");
-  exec("amixer set Master,0 95%");
+  exec("amixer set Master,0 100%");
   playMP3(GetData("beep60.mp3"));
   echo ("Iqomah");
 }
@@ -93,7 +93,7 @@ function IqomahStart()
 function TerbitStart()
 {
   UpdStatusMurotal("stop");
-  exec("amixer set Master,0 90%");
+  exec("amixer set Master,0 100%");
   playMP3(GetData("beep10.mp3"));
   echo ("Matahari Terbit");
 }
