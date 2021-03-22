@@ -2,7 +2,7 @@
 require_once "../include/system.php";
 $url = GetURL();
 $cFileConfig = GetData("config.json");
-$a = 10 ;
+
 if (isset($_POST["nSave"])) {
   file_put_contents($cFileConfig, json_encode($_POST));
 
