@@ -1,0 +1,4 @@
+Atur Volume : 
+amixer set Master,0 50%
+
+amixer -q cset numid=1 50%
