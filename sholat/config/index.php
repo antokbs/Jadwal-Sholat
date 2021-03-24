@@ -7,6 +7,7 @@ if (isset($_POST["nSave"])) {
   file_put_contents($cFileConfig, json_encode($_POST));
 
   // Jika Murotal Posisi Start Maka Volume Kita atur, kalau tidak maka tidak usah atur volume
+
   if (GetStatusMurotal()) {
     shell_exec("amixer set Master,0 " . $_POST["nMurotal_Volume"] . "%");
   }

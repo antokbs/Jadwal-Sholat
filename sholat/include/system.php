@@ -33,10 +33,10 @@ false = stop
 */
 function GetStatusMurotal()
 {
-  $cFileData = GetData("status.txt");
+  $cFile = GetData("status.txt");
   $lStatus = false;
-  if (is_file($cFileData)) {
-    $cData = file_get_contents($cFileData);
+  if (is_file($cFile)) {
+    $cData = file_get_contents($cFile);
     if (strpos($cData, "start") !== false) $lStatus = true;
   }
   return $lStatus;
