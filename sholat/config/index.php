@@ -6,7 +6,10 @@ $cFileConfig = GetData("config.json");
 if (isset($_POST["nSave"])) {
   file_put_contents($cFileConfig, json_encode($_POST));
 
-  shell_exec("amixer set Master,0 " . $_POST["nMurotal_Volume"] . "%");
+  // Jika Murotal Posisi Start Maka Volume Kita atur, kalau tidak maka tidak usah atur volume
+  if (GetStatusMurotal()) {
+    shell_exec("amixer set Master,0 " . $_POST["nMurotal_Volume"] . "%");
+  }
 }
 if (is_file($cFileConfig)) $va = json_decode(file_get_contents($cFileConfig), true);
 $nSubuh = isset($va["nSubuh"]) ? $va["nSubuh"] : 0;

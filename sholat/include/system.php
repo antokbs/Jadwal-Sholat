@@ -25,3 +25,19 @@ function GetConfig($cKey, $default = "")
   $default = isset($vaData[$cKey]) ? $vaData[$cKey] : $default;
   return $default;
 }
+
+/*
+Untuk Mendapat Status Murotal 
+true = start
+false = stop
+*/
+function GetStatusMurotal()
+{
+  $cFileData = GetData("status.txt");
+  $lStatus = false;
+  if (is_file($cFileData)) {
+    $cData = file_get_contents($cFileData);
+    if (strpos($cData, "start") !== false) $lStatus = true;
+  }
+  return $lStatus;
+}
