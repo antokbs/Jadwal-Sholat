@@ -90,7 +90,7 @@ function CheckSholatMalam(d) {
     if (vaSholatMalam[key] !== 0) {
       if (vaJadwal.subuh.adzan - vaSholatMalam[key] == nMenit) {
         ajax("", "SholatMalam", "", function (cData) {
-          ShowMessage("Waktunya Sholat Malam ...") ;
+          ShowMessage("Waktunya Sholat Malam ...");
           console.log(cData);
         })
       }
@@ -201,7 +201,7 @@ function CheckSholat(d) {
       if (vaJadwal[key].adzan == nMenit) {
         ajax("", "TerbitStart", "", function (cData) {
           console.log(cData);
-          ShowMessage("Matahari Terbit ...") ;
+          ShowMessage("Matahari Terbit ...");
         });
       }
     } else {
@@ -212,7 +212,7 @@ function CheckSholat(d) {
 
         ajax("", "AdzanStart", "Waktu=" + cSholat, function (cData) {
           console.log(cData);
-          ShowMessage("Adzan Sholat " + vaIqomah.sholat) ;
+          ShowMessage("Adzan Sholat " + vaIqomah.sholat);
         });
       }
     }
@@ -300,10 +300,10 @@ function showTime() {
       if (nDetik == 0) {
         ajax("", "IqomahStart", "", function (cData) {
           console.log(cData);
-          ShowMessage("Waktu Sholat " + vaIqomah.sholat) ;
+          ShowMessage("Waktu Sholat " + vaIqomah.sholat);
         });
-      }else{
-        ShowMessage("Iqomah - " + Menit2Time(nDetik)) ;
+      } else {
+        ShowMessage("Iqomah - " + Menit2Time(nDetik));
       }
     } else if (nDetik < -55) {
       if (cellTitle !== null) cellTitle.innerText = vaIqomah.sholat;
@@ -317,17 +317,17 @@ function showTime() {
   if (d.getSeconds() % 5 == 0) {
     ajax("", "CheckAyat", "", function (cData) {
       var vaData = JSON.parse(cData);
-      if(vaData.status == "start"){
-        ShowMessage(vaData.ayat) ;
+      if (vaData.status == "start") {
+        ShowMessage(vaData.ayat);
       }
     });
     GetNamaHari(d);
   }
 }
 
-function ShowMessage(cMessage){
+function ShowMessage(cMessage) {
   var cell = _id("cellSurat");
-  if (cell !== null) {
+  if (cell !== null && cMessage !== "") {
     cell.innerHTML = cMessage;
   }
 }
