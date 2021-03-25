@@ -2,11 +2,6 @@
 require_once "./include/system.php";
 $_GET["cKey"]($_POST);
 
-function testajax($va)
-{
-  echo ("Ketemu3");
-}
-
 function CheckConfig()
 {
   $cFileConfig = GetData("config.json");
@@ -101,7 +96,7 @@ function TerbitStart()
 function CheckAyat()
 {
   $cFile = GetData("ayat.txt");
-  $cStatus = GetStatusMurotal() ? "start" : "stop" ;
+  $cStatus = GetStatusMurotal() ? "start" : "stop";
   $vaData = [
     "ayat" => "",
     "status" => $cStatus
