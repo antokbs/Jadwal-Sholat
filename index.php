@@ -13,7 +13,7 @@ $url = GetURL() . "sholat/";
 </head>
 
 <body onload="location.href = '<?= $url ?>';">
-  Redirect ..
+  Redirect ...
 </body>
 
 </html>
