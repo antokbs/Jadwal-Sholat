@@ -113,6 +113,11 @@ function StartMurotal(d) {
       nStart = vaJadwal[key].adzan + vaJadwal[key].iqomah + nLamaAdzan + nLamaSholat;
     } else if (key == "terbit") {
       nStart = vaJadwal[key].adzan + 1;
+    } else {
+      // Jika Antara Subuh Ke Shuruq atau Magrib Ke Isya kita beri tulisan Murotal Stoped
+      if (vaJadwal[key].adzan + vaJadwal[key].iqomah + nLamaAdzan + nLamaSholat == nMenit) {
+        ShowMessage("Murotal Stoped ....");
+      }
     }
 
     if (nStart == nMenit) lStart = true;
