@@ -20,6 +20,7 @@ $nTimezone = GetConfig("nTimeZone", 7);
       text-align: center;
       padding: 4px;
       background-color: #aaaaaa;
+      white-space: nowrap;
     }
 
     .rowData td {
@@ -27,6 +28,7 @@ $nTimezone = GetConfig("nTimeZone", 7);
       text-align: center;
       padding: 4px;
       background-color: #dedede;
+      white-space: nowrap;
     }
 
     .tabMain {
