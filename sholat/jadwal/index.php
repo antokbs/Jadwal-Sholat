@@ -31,6 +31,10 @@ $nTimezone = GetConfig("nTimeZone", 7);
       white-space: nowrap;
     }
 
+    .rowToday td {
+      background-color: yellow;
+    }
+
     .tabMain {
       margin-left: auto;
       margin-right: auto;
@@ -54,6 +58,7 @@ $nTimezone = GetConfig("nTimeZone", 7);
       var nBulan = Math.floor(document.getElementById("nBulan").value) + 1;
       var nTahun = document.getElementById("nTahun").value;
       var d = new Date(nTahun, nBulan, 0);
+      var now = new Date();
 
       initTable(table);
 
@@ -68,6 +73,10 @@ $nTimezone = GetConfig("nTimeZone", 7);
 
         var row = table.insertRow();
         row.className = "rowData";
+        if (d1.getFullYear() == now.getFullYear() && d1.getMonth() == now.getMonth() && d1.getDate() == now.getDate()) {
+          row.className += " rowToday";
+        }
+
         row.insertCell().innerHTML = n;
         row.insertCell().innerHTML = addZero(d1.getDate()) + "-" + addZero(d1.getMonth() + 1) + "-" + d1.getFullYear();
         row.insertCell().innerHTML = times.fajr;
