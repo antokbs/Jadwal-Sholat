@@ -13,7 +13,9 @@ $nTimezone = GetConfig("nTimeZone", 7);
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="<?= $url ?>../include/system.js"></script>
   <script type="text/javascript" src="<?= $url ?>../include/PrayTimes.js"></script>
+  <script type="text/javascript" src="<?= $url ?>index.js"></script>
   <style type="text/css">
     .rowHeader td {
       border: 1px solid #aaaaaa;
@@ -40,62 +42,6 @@ $nTimezone = GetConfig("nTimeZone", 7);
       margin-right: auto;
     }
   </style>
-  <script>
-    function LoadForm() {
-      BuildCalendar();
-    }
-
-    function initTable(table) {
-      while (table.rows.length > 2) {
-        table.deleteRow(2);
-      }
-    }
-
-    function BuildCalendar() {
-      var vaKoordinat = [<?= $cKoordinat ?>];
-      var nTimezone = <?= $nTimezone ?>;
-      var table = document.getElementById("tbCalendar");
-      var nBulan = Math.floor(document.getElementById("nBulan").value) + 1;
-      var nTahun = document.getElementById("nTahun").value;
-      var d = new Date(nTahun, nBulan, 0);
-      var now = new Date();
-
-      initTable(table);
-
-      prayTimes.setMethod("INDONESIA");
-      if (vaKoordinat.length < 2) vaKoordinat[1] = 0;
-      vaKoordinat[0] = parseFloat(vaKoordinat[0]);
-      vaKoordinat[1] = parseFloat(vaKoordinat[1]);
-
-      for (var n = 1; n <= d.getDate(); n++) {
-        var d1 = new Date(d.getFullYear(), d.getMonth(), n);
-        var times = prayTimes.getTimes(d1, vaKoordinat, nTimezone);
-
-        var row = table.insertRow();
-        row.className = "rowData";
-        if (d1.getFullYear() == now.getFullYear() && d1.getMonth() == now.getMonth() && d1.getDate() == now.getDate()) {
-          row.className += " rowToday";
-        }
-
-        row.insertCell().innerHTML = n;
-        row.insertCell().innerHTML = addZero(d1.getDate()) + "-" + addZero(d1.getMonth() + 1) + "-" + d1.getFullYear();
-        row.insertCell().innerHTML = times.fajr;
-        row.insertCell().innerHTML = times.sunrise;
-        row.insertCell().innerHTML = times.dhuhr;
-        row.insertCell().innerHTML = times.asr;
-        row.insertCell().innerHTML = times.maghrib;
-        row.insertCell().innerHTML = times.isha;
-      }
-      //console.log(d.getDate());
-    }
-
-    function addZero(i) {
-      if (i < 10) {
-        i = "0" + i;
-      }
-      return i;
-    }
-  </script>
   <title>Document</title>
 </head>
 

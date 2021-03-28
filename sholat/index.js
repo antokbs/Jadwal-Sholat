@@ -7,7 +7,6 @@ var vaJadwal = {
   "maghrib": { "adzan": 0, "iqomah": 0 },
   "isya": { "adzan": 0, "iqomah": 0 }
 };
-var vaConfig = {};
 var cellJam = null;
 var vaIqomah = { "start": -1, "end": -1, "sholat": "" };
 var nLamaAdzan = 3; // Untuk Waktu Adzan Kita toleransi 3 Menit
@@ -15,31 +14,6 @@ var vaSholatMalam = { "satu": 90, "dua": 60 }; // Untuk Reminder Sholat Malam 1.
 function LoadForm(url) {
   BASE_URL = url;
   showTime();
-}
-
-function Time2Menit(cTime) {
-  var va = cTime.split(":");
-  var nMenit = (va[0]) * 60;
-
-  if (va.length >= 2) nMenit += Math.floor(va[1]);
-  return nMenit;
-}
-
-function Menit2Time(nMenit) {
-  var nJam = Math.floor(nMenit / 60);
-  nMenit -= (nJam * 60);
-  return addZero(nJam) + ":" + addZero(nMenit);
-}
-
-function GetCfg(key, cDefault = "") {
-  if (key in vaConfig) {
-    cDefault = vaConfig[key];
-  }
-  return cDefault;
-}
-
-function SaveCfg(key, value) {
-  vaConfig[key] = value;
 }
 
 function jadwalSholat() {
@@ -251,19 +225,8 @@ function CheckSholat(d) {
   if (cell !== null) cell.className = "cellWaktu cellWaktuNext";
 }
 
-function _id(cID) {
-  return document.getElementById(cID);
-}
-
 function ReloadPage() {
   location.reload();
-}
-
-function addZero(i) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  return i;
 }
 
 function showTime() {
@@ -277,12 +240,7 @@ function showTime() {
 
   if (nCheckJadwal !== d.getMinutes()) {
     nCheckJadwal = d.getMinutes();
-    ajax("", "CheckConfig", "", function (cData) {
-      var va = JSON.parse(cData);
-      for (var k in va) {
-        SaveCfg(k, va[k]);
-      }
-
+    initConfig(function (cData) {
       nLamaAdzan = Math.floor(GetCfg("nLamaAdzan", 3));
       jadwalSholat();
 

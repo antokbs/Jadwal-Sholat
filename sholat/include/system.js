@@ -1,4 +1,39 @@
 var BASE_URL = "";
+var vaConfig = {};
+
+function initConfig(callBack) {
+  ajax("", "CheckConfig", "", function (cData) {
+    var va = JSON.parse(cData);
+    for (var k in va) {
+      SaveCfg(k, va[k]);
+    }
+
+    callBack();
+  });
+}
+
+function _id(cID) {
+  return document.getElementById(cID);
+}
+
+function GetCfg(key, cDefault = "") {
+  if (key in vaConfig) {
+    cDefault = vaConfig[key];
+  }
+  return cDefault;
+}
+
+function SaveCfg(key, value) {
+  vaConfig[key] = value;
+}
+
+function addZero(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+
 function ajax(url, cKey, cParameter, callBack) {
   var page = false;
   cMethod = "POST";
@@ -50,4 +85,18 @@ function ajax(url, cKey, cParameter, callBack) {
   page.open(cMethod, url, true);
   page.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   page.send(cParameter);
+}
+
+function Time2Menit(cTime) {
+  var va = cTime.split(":");
+  var nMenit = (va[0]) * 60;
+
+  if (va.length >= 2) nMenit += Math.floor(va[1]);
+  return nMenit;
+}
+
+function Menit2Time(nMenit) {
+  var nJam = Math.floor(nMenit / 60);
+  nMenit -= (nJam * 60);
+  return addZero(nJam) + ":" + addZero(nMenit);
 }
