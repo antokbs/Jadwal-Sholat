@@ -42,7 +42,7 @@ $nTimezone = GetConfig("nTimeZone", 7);
       margin-right: auto;
     }
   </style>
-  <title>Document</title>
+  <title>Jadwal Sholat Bulanan</title>
 </head>
 
 <body onload="LoadForm()" style="text-align: center;">
