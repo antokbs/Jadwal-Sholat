@@ -228,9 +228,9 @@ function ReloadPage() {
 }
 
 /*
-Function Untuk Mengambil Tanggal sekarang Jangan pakai function New Date() 
-Karena dengan function ini kita akan mengambil Timezone di configurasi
-Dan Bukan Mengambile Timezone di komputer
+* Function Untuk Mengambil Tanggal sekarang Jangan pakai function New Date() 
+* Karena dengan function ini kita akan mengambil Timezone di configurasi
+* Dan Bukan Mengambile Timezone di komputer
 */
 function getNow(){
   var d = new Date() ;
