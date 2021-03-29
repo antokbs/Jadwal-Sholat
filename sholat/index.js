@@ -227,15 +227,22 @@ function ReloadPage() {
   location.reload();
 }
 
+/*
+Function Untuk Mengambil Tanggal sekarang Jangan pakai function New Date() 
+Karena dengan function ini kita akan mengambil Timezone di configurasi
+Dan Bukan Mengambile Timezone di komputer
+*/
 function getNow(){
   var d = new Date() ;
 
-  // Timezone sesuai yang di Setting di config Jadiman Menit
+  /* 
+  * Timezone sesuai yang di Setting di config Jadiman Menit  
+  * Kita tambah dengan Timezone yang ada di Komputer
+  * Ini supaya kita bisa setting timezone tanpa harus merubah timezone komputer
+  */
   var nTimeZone = Math.floor(GetCfg("nTimeZone",7)) * 60 ;
-  
-  // Kita tambak dengan Timezone yang ada di Komputer
-  // Ini supaya kita bisa setting timezone tanpa harus merubah timezone komputer
   nTimeZone += d.getTimezoneOffset() ;
+
   d.setMinutes(d.getMinutes()+nTimeZone) ;
   return d ;
 }
