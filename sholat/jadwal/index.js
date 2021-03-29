@@ -13,7 +13,7 @@ function BuildCalendar() {
   var nBulan = Math.floor(_id("nBulan").value) + 1;
   var nTahun = _id("nTahun").value;
   var d = new Date(nTahun, nBulan, 0);
-  var now = new Date();
+  var now = MyDate();
 
   initTable(table);
 
@@ -44,5 +44,4 @@ function BuildCalendar() {
     row.insertCell().innerHTML = Menit2Time(Time2Menit(times.maghrib) + 2 + Math.floor(GetCfg("nMaghrib", 0)));
     row.insertCell().innerHTML = Menit2Time(Time2Menit(times.isha) + 2 + Math.floor(GetCfg("nIsya", 0)));
   }
-  //console.log(d.getDate());
 }
