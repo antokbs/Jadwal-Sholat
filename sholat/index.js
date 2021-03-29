@@ -16,9 +16,7 @@ function LoadForm(url) {
   showTime();
 }
 
-function jadwalSholat() {
-  var date = new Date();
-
+function jadwalSholat(d) {
   prayTimes.setMethod("INDONESIA");
   var vaKoordinat = GetCfg("cKoordinat", "0,0").split(",");
 
@@ -26,7 +24,7 @@ function jadwalSholat() {
   vaKoordinat[0] = parseFloat(vaKoordinat[0]);
   vaKoordinat[1] = parseFloat(vaKoordinat[1]);
 
-  var times = prayTimes.getTimes(date, vaKoordinat, Math.floor(GetCfg("nTimeZone", 7)));
+  var times = prayTimes.getTimes(d, vaKoordinat, Math.floor(GetCfg("nTimeZone", 7)));
 
   vaJadwal.subuh.adzan = Time2Menit(times.fajr) + 2 + Math.floor(GetCfg("nSubuh", 0));
   vaJadwal.terbit.adzan = Time2Menit(times.sunrise) + 2;
@@ -52,10 +50,10 @@ function jadwalSholat() {
   }
 
   // Mengatur Warna Tampilan Untuk Jadwal Sholat yang Akan Datang.
-  CheckSholat(date);    // Check Apakah Waktunya Adzan kalau adzan kita putar mp3 adzan.
-  StopMurotal(date);    // Check Waktu Mematikan Murotal.
-  StartMurotal(date);   // Check Waktu Menjalankan Murotal
-  CheckSholatMalam(date);
+  CheckSholat(d);    // Check Apakah Waktunya Adzan kalau adzan kita putar mp3 adzan.
+  StopMurotal(d);    // Check Waktu Mematikan Murotal.
+  StartMurotal(d);   // Check Waktu Menjalankan Murotal
+  CheckSholatMalam(d);
 }
 
 function CheckSholatMalam(d) {
@@ -229,8 +227,21 @@ function ReloadPage() {
   location.reload();
 }
 
+function getNow(){
+  var d = new Date() ;
+
+  // Timezone sesuai yang di Setting di config Jadiman Menit
+  var nTimeZone = Math.floor(GetCfg("nTimeZone",7)) * 60 ;
+  
+  // Kita tambak dengan Timezone yang ada di Komputer
+  // Ini supaya kita bisa setting timezone tanpa harus merubah timezone komputer
+  nTimeZone += d.getTimezoneOffset() ;
+  d.setMinutes(d.getMinutes()+nTimeZone) ;
+  return d ;
+}
+
 function showTime() {
-  var d = new Date();
+  var d = getNow() ;
 
   // Kita Taruh di atas Biar Kalau ada Error di script aplikasi masih tetap jalan / loop terus
   setTimeout(showTime, 1000);
@@ -242,7 +253,7 @@ function showTime() {
     nCheckJadwal = d.getMinutes();
     initConfig(function (cData) {
       nLamaAdzan = Math.floor(GetCfg("nLamaAdzan", 3));
-      jadwalSholat();
+      jadwalSholat(d);
 
       if (GetCfg("Reload", "0") == "1") {
         console.log("Reload");
