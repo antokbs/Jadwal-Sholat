@@ -267,6 +267,11 @@ function showTime() {
         ShowMessage("Iqomah - " + Menit2Time(nDetik));
       }
     } else if (nDetik < -55) {
+      if (nDetik == -60) {
+        ajax("", "SetVolume0", "", function (cData) {
+          console.log(cData);
+        });
+      }
       if (cellTitle !== null) cellTitle.innerText = vaIqomah.sholat;
       vaIqomah.start = -1;
       vaIqomah.end = -1;

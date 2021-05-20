@@ -26,6 +26,12 @@ function CheckConfig()
   echo ($cData);
 }
 
+function SetVolume0($va)
+{
+  exec("amixer set Master,0 10%");
+  echo ("Volume 10%");
+}
+
 function AdzanStart($va)
 {
   // Naikan Volume Ke 100%
