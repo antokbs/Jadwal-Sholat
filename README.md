@@ -19,12 +19,11 @@ Cara Installasi :
     @xscreensaver -no-splash
 
     # Jalankan Chromium Browser Mode Normal
-    # @chromium-browser --start-fullscreen --app=http://localhost:8080/sholat/
-    @chromium-browser --kiosk --incognito --disable-pinch --overscroll-history-navigation=0 --app=http://localhost:8080/sholat/
+    # @chromium-browser --kiosk http://localhost:8080/sholat/
 
     # Kalau Ingin Mode incognito
     # url http://localhost:8080/sholat/sholat/ selain localhost tidak bisa menjalankan perintah adzan dll ( menjalankan perintah memutar mp3 )
-    @chromium-browser --kiosk --incognito --disable-pinch --overscroll-history-navigation=0 --app=http://localhost:8080/sholat/
+    @chromium-browser --kiosk --incognito http://localhost:8080/sholat/
 
     # Hiden Mouse
     @unclutter -idle 0    
