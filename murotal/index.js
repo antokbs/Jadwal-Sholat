@@ -1,30 +1,3 @@
-function Body_Onload(Data) {
-  if (Data == undefined) {
-    ajax("", "ListSurah", "", function (cData) {
-      if (cData !== "") {
-        SetDataToTable(cData);
-      } else {
-        alert("Data Tidak Ditemukan, Mungkin Folder MP3 Salah, Periksa pada Configurasi");
-      }
-    });
-  } else {
-    SetDataToTable(Data);
-  }
-}
-
-function SetDataToTable(cData) {
-  var cTable = "";
-  var n = "001";
-  Data = JSON.parse(cData);
-  Data.forEach((itemData) => {
-    cTable += '<tr><td>' + itemData["nSurah"] + '</td>';
-    cTable += '<td style="text-align:center;"><input type="checkbox" id="status_' + itemData["nSurah"] + '" name="cStatus_' + itemData["nSurah"] + '"><input type="hidden" name="cPath_' + itemData["nSurah"] + '" value="' + itemData["cPath"] + '"></td>';
-    cTable += '<td id="surah_' + itemData["nSurah"] + '"><input type="hidden" name="cNamaSurah_' + itemData["nSurah"] + '" value="' + itemData["cSurah"] + '">' + itemData["cSurah"] + '</td>';
-    cTable += '<td><input type="number" id="repeat_' + itemData["nSurah"] + '" name="nReapet_' + itemData["nSurah"] + '" value="1"></td>';
-    cTable += '<td><input type="number" id="volum' + itemData["nSurah"] + '" name="nVolum_' + itemData["nSurah"] + '" value="1"></td>';
-  });
-  document.getElementById('bodytable').innerHTML = cTable;
-}
 
 function checkall(source) {
   var checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -34,3 +7,40 @@ function checkall(source) {
   }
 }
 
+function getField(id, value = "") {
+  let obj = document.getElementById(id);
+  if (obj !== null) {
+    if (obj.type == "checkbox") {
+      value = obj.checked ? 1 : 0;
+    } else {
+      value = obj.value;
+    }
+  }
+  return value;
+}
+
+function cmdSave_onClick() {
+  var t = document.getElementById('bodytable');
+  var c = "";
+  let id = "";
+
+  let nCheck = 0;
+  let nRepeat = 0;
+  let nVolume = 0;
+  let cPath = "";
+  for (var row = 0; row < t.rows.length; row++) {
+    id = t.rows[row].cells[0].innerText;
+
+    nCheck = getField("status_" + id, 0);
+    nRepeat = getField("repeat_" + id, 1);
+    nVolume = getField("volume_" + id, 60);
+    cPath = getField("cPath_" + id, "");
+
+    c += "&r_" + id + "=" + cPath + "," + nCheck + "," + nRepeat + "," + nVolume;
+  }
+  if (confirm("Data Disimpan ?")) {
+    ajax("", "SaveData", c, function (cData) {
+      alert(cData);
+    });
+  }
+}
