@@ -12,12 +12,15 @@ if ($nProsess > 1) {
   echo ("Aplikasi Sudah Berjalan ....\n");
   die();
 }
-PlayMurotal();
+while (true) {
+  PlayMurotal();
+}
 
 // Memutar Murotal
 function PlayMurotal()
 {
   // Ambil Posisi Terakhir
+  $md5 = GetMD5Surat();
   $cAyatTerakhir = "";
   $cFileAyat = GetData("ayat.txt");
   if (is_file($cFileAyat)) {
@@ -29,27 +32,36 @@ function PlayMurotal()
   }
 
   // Folder Murotal
-  $path = realpath($_SERVER['HOME'] . "/MP3/Alafasy");
-  if (is_dir($path)) {
-    $vaSurat = scandir($path);
-    while (true) {
-      // Kita Loop Surat nya
-      foreach ($vaSurat as $surat) {
-        if (substr($surat, 0, 1) !== "." && is_dir("$path/$surat")) {
-          // Ambil Ayat Untuk Surat yang Aktif
-          $vaAyat = GetAyat("$path/$surat");
-          foreach ($vaAyat as $ayat) {
-            $mp3 = "$path/$surat/$ayat";
-            if (is_file($mp3)) {
-              if ($cAyatTerakhir !== "" && $mp3 == $cAyatTerakhir) $cAyatTerakhir = "";
+  $cFileSurat = GetData("murotal.json");
+  while (true) {
+    if (is_file($cFileSurat)) {
+      $vaSurat = json_decode(file_get_contents($cFileSurat), true);
+      foreach ($vaSurat as $surat => $value) {
+        if ($value["check"] == 1) {
+          for ($n = 0; $n < $value["repeat"]; $n++) {
+            if (is_dir($surat)) {
+              $vaAyat = GetAyat($surat);
+              foreach ($vaAyat as $ayat) {
+                $mp3 = "$surat/$ayat";
+                if (is_file($mp3)) {
+                  if ($cAyatTerakhir !== "" && $mp3 == $cAyatTerakhir) $cAyatTerakhir = "";
 
-              if ($cAyatTerakhir == "") {
-                CheckStatus();
-                $vaData = ["ayat" => $mp3, "datetime" => time()];
-                file_put_contents(GetData("ayat.txt"), json_encode($vaData));
+                  if ($cAyatTerakhir == "") {
+                    CheckStatus();
+                    $vaData = ["ayat" => $mp3, "datetime" => time()];
+                    file_put_contents(GetData("ayat.txt"), json_encode($vaData));
 
-                // Putar MP3
-                exec("cvlc --play-and-exit '$mp3'");
+                    // Check Kalau Data Surat Berubah akan kita Refresh Ulang
+                    if ($md5 <> GetMD5Surat()) return true;
+                    echo ("MD5 : $md5\n");
+
+                    // Atur Volume Sesuai Configurasi
+                    shell_exec("amixer set Master,0 " . $value["volume"] . "%");
+
+                    // Putar MP3
+                    exec("cvlc --play-and-exit '$mp3'");
+                  }
+                }
               }
             }
           }
@@ -57,9 +69,17 @@ function PlayMurotal()
       }
       $cAyatTerakhir = "";
     }
-  } else {
-    die("Folder Tidak Ditemukan ...");
   }
+}
+
+function GetMD5Surat()
+{
+  $cFileSurat = GetData("murotal.json");
+  $c = "";
+  if (is_file($cFileSurat)) {
+    $c = md5_file($cFileSurat);
+  }
+  return $c;
 }
 
 function GetAyat($path)
