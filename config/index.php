@@ -1,5 +1,5 @@
 <?php
-require_once "../include/system.php";
+require_once __DIR__ . "/../include/system.php";
 $url = GetURL();
 $cFileConfig = GetData("config.json");
 
@@ -31,6 +31,7 @@ $nAshar_Volume = isset($va["nAshar_Volume"]) ? $va["nAshar_Volume"] : 100;
 $nMaghrib_Volume = isset($va["nMaghrib_Volume"]) ? $va["nMaghrib_Volume"] : 100;
 $nIsya_Volume = isset($va["nIsya_Volume"]) ? $va["nIsya_Volume"] : 100;
 $nMurotal_Volume = isset($va["nMurotal_Volume"]) ? $va["nMurotal_Volume"] : 60;
+$cMurotal_Dir = isset($va["cMurotal_Dir"]) ? $va["cMurotal_Dir"] : "/home/pi/MP3";
 
 $nHijriah = isset($va["nHijriah"]) ? $va["nHijriah"] : 0;
 
@@ -155,6 +156,13 @@ $hijri = new HijriDate($nHijriah); //Wajib ada
       <tr>
         <td colspan="3" class="cellHeader">
           :: MUROTAL
+        </td>
+      </tr>
+      <tr>
+        <td>Folder MP3</td>
+        <td width="5px">:</td>
+        <td>
+          <input name="cMurotal_Dir" type="text" value="<?= $cMurotal_Dir ?>" style="width:100%">
         </td>
       </tr>
       <tr>

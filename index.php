@@ -1,5 +1,5 @@
 <?php
-require_once "./sholat/include/system.php";
+require_once __DIR__ . "/include/system.php";
 $url = GetURL() . "sholat/";
 ?>
 <!DOCTYPE html>

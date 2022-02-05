@@ -1,5 +1,5 @@
 <?php
-require_once "./include/system.php";
+require_once __DIR__ . "/../include/system.php";
 $url = GetURL();
 ?>
 <!DOCTYPE html>
@@ -11,8 +11,8 @@ $url = GetURL();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jadwal Sholat</title>
   <link type='text/css' rel='stylesheet' href='<?= $url ?>css.css'>
-  <script type="text/javascript" src="<?= $url ?>include/PrayTimes.js"></script>
-  <script type="text/javascript" src="<?= $url ?>include/system.js"></script>
+  <script type="text/javascript" src="<?= $url ?>../include/PrayTimes.js"></script>
+  <script type="text/javascript" src="<?= $url ?>../include/system.js"></script>
   <script type="text/javascript" src="<?= $url ?>index.js"></script>
 </head>
 

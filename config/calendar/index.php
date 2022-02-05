@@ -1,5 +1,5 @@
 <?php
-require_once "../../include/system.php";
+require_once __DIR__ . "/../../../include/system.php";
 
 $nHijriah = GetConfig("nHijriah", 0);
 $hijri = new HijriDate($nHijriah); //Wajib ada

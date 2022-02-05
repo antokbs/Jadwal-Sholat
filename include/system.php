@@ -4,6 +4,7 @@ require_once __DIR__ . "/hijridate.php";
 function GetURL()
 {
   $url = "http://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["SCRIPT_NAME"]);
+  //$url = "http://" . $_SERVER["HTTP_HOST"];
   if (substr($url, -1) !== "/") $url .= "/";
 
   return $url;
