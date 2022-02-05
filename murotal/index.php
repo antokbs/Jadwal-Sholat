@@ -6,6 +6,7 @@ $cFileConfig = GetData("murotal.json");
 if (isset($_POST["nSave"])) {
     file_put_contents($cFileConfig, json_encode($_POST));
 }
+
 ?>
 <!DOCTYPE html>
 <html>
