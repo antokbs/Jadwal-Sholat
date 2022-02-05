@@ -97,8 +97,8 @@ function ajax(url, cKey, cParameter, callBack) {
     }
   };
 
-  /*url += "&cKey=" + cKey;
-  url += "ajax.php?__par=" + url;*/
+  //url += "&cKey=" + cKey;
+  //url += "ajax.php?__par=" + url;
 
   url += "ajax.php?__par=" + url + "&cKey=" + cKey;
   if (typeof BASE_URL !== "undefined") url = BASE_URL + url;

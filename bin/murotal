@@ -53,7 +53,6 @@ function PlayMurotal()
 
                     // Check Kalau Data Surat Berubah akan kita Refresh Ulang
                     if ($md5 <> GetMD5Surat()) return true;
-                    echo ("MD5 : $md5\n");
 
                     // Atur Volume Sesuai Configurasi
                     shell_exec("amixer set Master,0 " . $value["volume"] . "%");
