@@ -3,15 +3,6 @@ require_once __DIR__ . "/../include/system.php";
 $url = GetURL();
 $cFileConfig = GetData("config.json");
 
-if (isset($_POST["nSave"])) {
-  file_put_contents($cFileConfig, json_encode($_POST));
-
-  // Jika Murotal Posisi Start Maka Volume Kita atur, kalau tidak maka tidak usah atur volume
-
-  if (GetStatusMurotal()) {
-    shell_exec("amixer set Master,0 " . $_POST["nMurotal_Volume"] . "%");
-  }
-}
 if (is_file($cFileConfig)) $va = json_decode(file_get_contents($cFileConfig), true);
 $nSubuh = isset($va["nSubuh"]) ? $va["nSubuh"] : 0;
 $nDzuhur = isset($va["nDzuhur"]) ? $va["nDzuhur"] : 0;
@@ -50,6 +41,8 @@ $hijri = new HijriDate($nHijriah); //Wajib ada
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jadwal Sholat Dan Murotal</title>
+  <script type="text/javascript" charset="utf8" src="<?= $url ?>index.js"></script>
+  <script type="text/javascript" src="<?= $url ?>../include/system.js"></script>
   <link type='text/css' rel='stylesheet' href='<?= $url ?>css.css'>
 </head>
 
@@ -194,8 +187,7 @@ $hijri = new HijriDate($nHijriah); //Wajib ada
       </tr>
       <tr>
         <td colspan="3" class="cellHeader" style="text-align: center;">
-          <input type="hidden" name="nSave">
-          <input type="button" value="Simpan" name="cmdSave" onclick="submit();">
+          <input type="button" value="Simpan" name="cmdSave" onclick="cmdSave_onClick();">
         </td>
       </tr>
     </table>

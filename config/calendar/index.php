@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../../../include/system.php";
+require_once __DIR__ . "/../../include/system.php";
 
 $nHijriah = GetConfig("nHijriah", 0);
 $hijri = new HijriDate($nHijriah); //Wajib ada
@@ -171,7 +171,7 @@ function GetTglClass($cal, $nBulan, $nTahun)
   if ($cal[1] == 1) $cRetval = " cellHari1 ";
 
   // Kalau Hari ini
-  if (date("Y-m-d", time()) == date("Y-m-d", mktime(0, 0, 0, $nBulan, $cal[0], $nTahun))) $cRetval = " cellHariIni ";
+  if (date("Y-m-d", time()) == date("Y-m-d", mktime(0, 0, 0, $nBulan, intval($cal[0]), $nTahun))) $cRetval = " cellHariIni ";
   return $cRetval;
 }
 

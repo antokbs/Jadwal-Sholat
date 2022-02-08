@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . "/../include/system.php";
 $url = GetURL();
-
 function ListSurah()
 {
   $vaList = array();

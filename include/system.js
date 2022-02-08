@@ -97,11 +97,14 @@ function ajax(url, cKey, cParameter, callBack) {
     }
   };
 
-  //url += "&cKey=" + cKey;
-  //url += "ajax.php?__par=" + url;
-
   url += "ajax.php?__par=" + url + "&cKey=" + cKey;
   if (typeof BASE_URL !== "undefined") url = BASE_URL + url;
+
+  var href = window.location.href;
+  var last = href.charAt(href.length - 1);
+  if (last !== "/") {
+    url = window.location.href + "/" + url;
+  }
 
   if (!cParameter) cParameter = "";
   page.open(cMethod, url, true);
@@ -121,4 +124,45 @@ function Menit2Time(nMenit) {
   var nJam = Math.floor(nMenit / 60);
   nMenit -= (nJam * 60);
   return addZero(nJam) + ":" + addZero(nMenit);
+}
+
+function GetFormContent(elem = null) {
+  var sXml = "";
+  var frm = document.forms[0];
+  var el = null;
+  if (elem !== null) {
+    if (elem.tagName && elem.tagName == 'FORM') {
+      frm = elem;
+    } else {
+      el = elem;
+    }
+  }
+  if (frm && frm.tagName == 'FORM') {
+    if (el == null) el = frm.elements;
+    for (var i = 0; i < el.length; i++) {
+      if (!el[i].name)
+        continue;
+      if (el[i].type && (el[i].type == 'radio' || el[i].type == 'checkbox') && el[i].checked == false)
+        continue;
+      if (el[i].disabled && el[i].disabled == true)
+        continue;
+
+      var name = el[i].name;
+      if (name) {
+        if (sXml != '') {
+          sXml += '&';
+        }
+        if (el[i].type == 'select-multiple') {
+          for (var j = 0; j < el[i].length; j++) {
+            if (el[i].options[j].selected == true) {
+              sXml += name + "=" + encodeURIComponent(el[i].options[j].value) + "&";
+            }
+          }
+        } else {
+          sXml += name + "=" + encodeURIComponent(el[i].value);
+        }
+      }
+    }
+  }
+  return sXml;
 }
