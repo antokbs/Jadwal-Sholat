@@ -1,25 +1,57 @@
+body {
+  font-family:'Times New Roman', Times, serif;
+  font-size: 30px;
+}
+
 table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
-    border: 1px solid #381f1f;
-  }
-  
-  td {
-    text-align: left;
-    padding: 2px 4px 2px 4px;
-    border-left: 1px solid #381f1f;
-  }
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #381f1f;
+  margin-bottom: 70px;
+}
 
-  th{
-    text-align: center;
-    padding: 4px;
-    border: 1px solid #3f3434;
-    background-color: #999494;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #cccccc;
-  }
+td {
+  text-align: left;
+  padding: 8px;
+  border-left: 1px solid #381f1f;
+}
 
-  .numCfg {width:6ch;text-align:right}
+th{
+  text-align: center;
+  padding: 8px;
+  position: sticky;
+  top:0px;
+  border: 1px solid #3f3434;
+  background-color: #999494;
+}  
+
+tr:nth-child(even) {
+  background-color: #cccccc;
+}
+
+.numCfg {
+  width:6ch;
+  font-size: 25px;
+  text-align:right
+}
+
+.cmdButton {
+  font-size: 25px;
+  text-align:center
+}
+
+.ckBox {
+  width: 30px;
+  height: 30px;
+}
+
+.divButton {
+  position: fixed;
+  bottom: 4px;
+  width: 100%;
+  padding:8px;
+  text-align:center;
+  border: 1px solid #381f1f;
+  background-color: #999494;
+}

@@ -48,15 +48,15 @@ function ListSurah()
 </head>
 
 <body>
-  <form name="form1" action="<?= $url ?>" method="POST">
+  <form name="form1">
     <table id="surah" class="display" style="width:100%">
-      <thead>
+      <thead id="tableHeader" class="tableHeader">
         <tr>
-          <th width="40px">No</th>
-          <th width="40px"><input type="checkbox" onclick="checkall(this);"></th>
+          <th width="60px">No</th>
+          <th width="60px"><input class="ckBox" type="checkbox" onclick="checkall(this);"></th>
           <th>Surat</th>
-          <th width="60px">Repeat</th>
-          <th width="90px">Volume</th>
+          <th width="100px">Repeat</th>
+          <th width="150px">Volume</th>
         </tr>
       </thead>
       <tbody id="bodytable">
@@ -66,7 +66,7 @@ function ListSurah()
           echo ("
           <tr>
           <td style='text-align:center'>$key</td>
-          <td style='text-align:center'><input type='checkbox' {$value['check']} id='status_$key'><input type='hidden' id='cPath_$key' value='{$value['path']}'></td>
+          <td style='text-align:center'><input class='ckBox' type='checkbox' {$value['check']} id='status_$key'><input type='hidden' id='cPath_$key' value='{$value['path']}'></td>
           <td>{$value['surah']}</td>
           <td style='text-align:center'><input min='1' max='100' type='number' class='numCfg' id='repeat_$key' value='{$value['repeat']}'></td>
           <td style='text-align:center'><input min='1' max='100' type='number' class='numCfg' id='volume_$key' value='{$value['volume']}'>&nbsp;%</td>
@@ -76,8 +76,8 @@ function ListSurah()
         ?>
       </tbody>
     </table>
-    <div style="padding:8px;text-align:center">
-      <input type="button" value="Simpan" name="cmdSave" onclick="cmdSave_onClick();">
+    <div class="divButton">
+      <input class="cmdButton" type="button" value="Simpan" name="cmdSave" onclick="cmdSave_onClick();">
     </div>
   </form>
 </body>
