@@ -1,8 +1,6 @@
 <?php
 require_once __DIR__ . "/../include/system.php";
 $url = GetURL();
-$c = shell_exec("eval echo ~");
-echo ("Path : $c <br>");
 
 function ListSurah()
 {
