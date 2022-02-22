@@ -6,6 +6,17 @@ function checkall(source) {
   }
 }
 
+function setupDisplay(n) {
+  let divsToHide = document.getElementsByClassName("qari_" + n); //divsToHide is an array
+  for (var i = 0; i < divsToHide.length; i++) {
+    if (divsToHide[i].style.display == "none") {
+      divsToHide[i].style.display = "";
+    } else {
+      divsToHide[i].style.display = "none";
+    }
+  }
+}
+
 function getField(id, value = "") {
   let obj = document.getElementById(id);
   if (obj !== null) {
@@ -28,7 +39,8 @@ function cmdSave_onClick() {
   let nVolume = 0;
   let cPath = "";
   for (var row = 0; row < t.rows.length; row++) {
-    id = t.rows[row].cells[0].innerText;
+    id = t.rows[row].cells[0].id;
+    console.log(id);
 
     nCheck = getField("status_" + id, 0);
     nRepeat = getField("repeat_" + id, 1);
