@@ -40,14 +40,14 @@ function cmdSave_onClick() {
   let cPath = "";
   for (var row = 0; row < t.rows.length; row++) {
     id = t.rows[row].cells[0].id;
-    console.log(id);
+    if (id != "") {
+      nCheck = getField("status_" + id, 0);
+      nRepeat = getField("repeat_" + id, 1);
+      nVolume = getField("volume_" + id, 60);
+      cPath = getField("cPath_" + id, "");
 
-    nCheck = getField("status_" + id, 0);
-    nRepeat = getField("repeat_" + id, 1);
-    nVolume = getField("volume_" + id, 60);
-    cPath = getField("cPath_" + id, "");
-
-    c += "&r_" + id + "=" + cPath + "," + nCheck + "," + nRepeat + "," + nVolume;
+      c += "&r_" + id + "=" + cPath + "," + nCheck + "," + nRepeat + "," + nVolume;
+    }
   }
   if (confirm("Data Disimpan ?")) {
     ajax("", "SaveData", c, function (cData) {
