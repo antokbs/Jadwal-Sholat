@@ -61,7 +61,7 @@ function ListSurah()
           <th width="60px"><input class="ckBox" type="checkbox" onclick="checkall(this);"></th>
           <th>Surat</th>
           <th width="100px">Repeat</th>
-          <th width="150px" style="">Volume</th>
+          <th width="150px">Volume</th>
         </tr>
       </thead>
       <tbody id="bodytable">
