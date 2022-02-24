@@ -23,11 +23,15 @@ function ListSurah()
 function SaveData($va)
 {
   $cFileConfig = GetData("murotal.json");
+  $cFileConfigAll = GetData("murotal_all.json");
   $data = array();
+  $data_all = array();
   foreach ($va as $value) {
     $cell = explode(",", $value);
-    $data[$cell[0]] = array("check" => $cell[1], "repeat" => $cell[2], "volume" => $cell[3]);
+    $data_all[$cell[0]] = array("check" => $cell[1], "repeat" => $cell[2], "volume" => $cell[3]);
+    if ($cell[1] == 1) $data[$cell[0]] = array("check" => $cell[1], "repeat" => $cell[2], "volume" => $cell[3]);
   }
   file_put_contents($cFileConfig, json_encode($data));
+  file_put_contents($cFileConfigAll, json_encode($data_all));
   echo ("Data Telah Disimpan .....");
 }

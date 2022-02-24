@@ -5,7 +5,7 @@ $url = GetURL();
 function ListSurah()
 {
   $vaList = array();
-  $cFileConfig = GetData("murotal.json");
+  $cFileConfig = GetData("murotal_all.json");
   if (is_file($cFileConfig)) {
     $vaList = json_decode(file_get_contents($cFileConfig), true);
   }
