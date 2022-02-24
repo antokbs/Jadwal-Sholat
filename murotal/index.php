@@ -58,7 +58,7 @@ function ListSurah()
       <thead id="tableHeader" class="tableHeader">
         <tr>
           <th width="60px">No</th>
-          <th width="60px"><input class="ckBox" type="checkbox" onclick="checkall(this);"></th>
+          <th width="60px"></th>
           <th>Surat</th>
           <th width="100px">Repeat</th>
           <th width="150px">Volume</th>
@@ -70,7 +70,13 @@ function ListSurah()
         $x = 1;
         foreach ($vaQari as $qari => $vaSurah) {
           $x++;
-          echo ("<tr><td onClick='setupDisplay($x);' colspan='5' style='background-color: blue;color:white'><strong>$qari</strong></td></tr>");
+          echo ("
+            <tr style='background-color: blue;color:white'>
+            <td></td>
+            <td style='text-align:center'><input class='ckBox' type='checkbox' id='status_id_$x' onclick='checkall(this);'></td>
+            <td onClick='setupDisplay($x);' colspan='3'><strong>$qari</strong></td>
+            </tr>
+          ");
           foreach ($vaSurah as $key => $value) {
             $id = "id_" . $x . "_" . $key;
             echo ("
