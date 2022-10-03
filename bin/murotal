@@ -12,6 +12,7 @@ if ($nProsess > 1) {
   echo ("Aplikasi Sudah Berjalan ....\n");
   die();
 }
+
 while (true) {
   PlayMurotal();
 }
@@ -20,9 +21,10 @@ while (true) {
 function PlayMurotal()
 {
   // Ambil Posisi Terakhir
-  $md5 = GetMD5Surat();
+  $cMurotalPeriode = GetMurotalPeriode();
+  $md5 = GetMD5Surat($cMurotalPeriode);
   $cAyatTerakhir = "";
-  $cFileAyat = GetData("ayat.txt");
+  $cFileAyat = GetData("ayat" . $cMurotalPeriode . ".txt");
   if (is_file($cFileAyat)) {
     $cAyatTerakhir = file_get_contents($cFileAyat);
     $va = json_decode($cAyatTerakhir, true);
@@ -32,7 +34,7 @@ function PlayMurotal()
   }
 
   // Folder Murotal
-  $cFileSurat = GetData("murotal.json");
+  $cFileSurat = GetData("murotal" . $cMurotalPeriode . ".json");
   while (true) {
     if (is_file($cFileSurat)) {
       $vaSurat = json_decode(file_get_contents($cFileSurat), true);
@@ -40,6 +42,7 @@ function PlayMurotal()
         if ($value["check"] == 1) {
           for ($n = 0; $n < $value["repeat"]; $n++) {
             if (is_dir($surat)) {
+              $cMurotalPeriode = GetMurotalPeriode();
               $vaAyat = GetAyat($surat);
               foreach ($vaAyat as $ayat) {
                 $mp3 = "$surat/$ayat";
@@ -49,10 +52,10 @@ function PlayMurotal()
                   if ($cAyatTerakhir == "") {
                     CheckStatus();
                     $vaData = ["ayat" => $mp3, "datetime" => time()];
-                    file_put_contents(GetData("ayat.txt"), json_encode($vaData));
+                    file_put_contents(GetData("ayat" . $cMurotalPeriode . ".txt"), json_encode($vaData));
 
                     // Check Kalau Data Surat Berubah akan kita Refresh Ulang
-                    if ($md5 <> GetMD5Surat()) return true;
+                    if ($md5 <> GetMD5Surat($cMurotalPeriode)) return true;
 
                     // Atur Volume Sesuai Configurasi
                     shell_exec("amixer set Master,0 " . $value["volume"] . "%");
@@ -71,9 +74,9 @@ function PlayMurotal()
   }
 }
 
-function GetMD5Surat()
+function GetMD5Surat($cMurotalPeriode)
 {
-  $cFileSurat = GetData("murotal.json");
+  $cFileSurat = GetData("murotal" . $cMurotalPeriode . ".json");
   $c = "";
   if (is_file($cFileSurat)) {
     $c = md5_file($cFileSurat);
@@ -118,4 +121,32 @@ function CheckStatus()
 function GetData($cFile = "")
 {
   return dirname(__DIR__) . "/data/$cFile";
+}
+
+// Mengambil Periode Waktu Apakah Periode Murotal 1 atau Murotal 2.
+function GetMurotalPeriode()
+{
+  $cMurotal = "";
+  $cFile = GetData("config.json");
+  if (is_file($cFile)) {
+    $vaConfig = json_decode(file_get_contents($cFile), true);
+
+    for ($n = 1; $n <= 5; $n++) {
+      $cAwal = "nJamMurotal2_Awal_$n";
+      $cAkhir = "nJamMurotal2_Akhir_$n";
+      if (isset($vaConfig[$cAwal]) && isset($vaConfig[$cAkhir])) {
+        $cAwal = $vaConfig[$cAwal] == "" ? "00:00" : $vaConfig[$cAwal];
+        $cAkhir = $vaConfig[$cAkhir] == "" ? "00:00" : $vaConfig[$cAkhir];
+        if ($cAwal <> "00:00" || $cAkhir <> "00:00") {
+          $nAwal = strtotime(date("Y-m-d ") . $cAwal . ":00");
+          $nAkhir = strtotime(date("Y-m-d ") . $cAkhir . ":59");
+          $nTime = time();
+          if ($nTime >= $nAwal && $nTime <= $nAkhir) {
+            $cMurotal = "2";
+          }
+        }
+      }
+    }
+  }
+  return $cMurotal;
 }

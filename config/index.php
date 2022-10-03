@@ -31,6 +31,19 @@ $cKoordinat = isset($va["cKoordinat"]) ? $va["cKoordinat"] : "-7.938679, 112.659
 $lYa = isset($va["nMatikanMurotalMalam"]) ? $va["nMatikanMurotalMalam"] == "Y" : true;
 $Reload = isset($va["Reload"]) ? $va["Reload"] : "0";
 
+// Mengatur Waktu Jadwal Murotal 2
+$nJamMurotal2_Awal_1 = isset($va["nJamMurotal2_Awal_1"]) ? $va["nJamMurotal2_Awal_1"] : "00:00";
+$nJamMurotal2_Awal_2 = isset($va["nJamMurotal2_Awal_2"]) ? $va["nJamMurotal2_Awal_2"] : "00:00";
+$nJamMurotal2_Awal_3 = isset($va["nJamMurotal2_Awal_3"]) ? $va["nJamMurotal2_Awal_3"] : "00:00";
+$nJamMurotal2_Awal_4 = isset($va["nJamMurotal2_Awal_4"]) ? $va["nJamMurotal2_Awal_4"] : "00:00";
+$nJamMurotal2_Awal_5 = isset($va["nJamMurotal2_Awal_5"]) ? $va["nJamMurotal2_Awal_5"] : "00:00";
+
+$nJamMurotal2_Akhir_1 = isset($va["nJamMurotal2_Akhir_1"]) ? $va["nJamMurotal2_Akhir_1"] : "00:00";
+$nJamMurotal2_Akhir_2 = isset($va["nJamMurotal2_Akhir_2"]) ? $va["nJamMurotal2_Akhir_2"] : "00:00";
+$nJamMurotal2_Akhir_3 = isset($va["nJamMurotal2_Akhir_3"]) ? $va["nJamMurotal2_Akhir_3"] : "00:00";
+$nJamMurotal2_Akhir_4 = isset($va["nJamMurotal2_Akhir_4"]) ? $va["nJamMurotal2_Akhir_4"] : "00:00";
+$nJamMurotal2_Akhir_5 = isset($va["nJamMurotal2_Akhir_5"]) ? $va["nJamMurotal2_Akhir_5"] : "00:00";
+
 $hijri = new HijriDate($nHijriah); //Wajib ada
 ?>
 <!DOCTYPE html>
@@ -172,6 +185,51 @@ $hijri = new HijriDate($nHijriah); //Wajib ada
         <td colspan="3">
           <input type="radio" name="nMatikanMurotalMalam" value="Y" <?php if ($lYa) echo ("checked=true") ?>> Ya
           <input type="radio" name="nMatikanMurotalMalam" value="T" <?php if (!$lYa) echo ("checked=true") ?>> Tidak
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" class="cellHeader">
+          :: JADWAL MUROTAL II
+        </td>
+      </tr>
+      <tr>
+        <td>JAM - 1</td>
+        <td width="5px">:</td>
+        <td>
+          <input name="nJamMurotal2_Awal_1" type="time" class="timeCfg" value="<?= $nJamMurotal2_Awal_1 ?>"> s/d
+          <input name="nJamMurotal2_Akhir_1" type="time" class="timeCfg" value="<?= $nJamMurotal2_Akhir_1 ?>">
+        </td>
+      </tr>
+      <tr>
+        <td>JAM - 2</td>
+        <td width="5px">:</td>
+        <td>
+          <input name="nJamMurotal2_Awal_2" type="time" class="timeCfg" value="<?= $nJamMurotal2_Awal_2 ?>"> s/d
+          <input name="nJamMurotal2_Akhir_2" type="time" class="timeCfg" value="<?= $nJamMurotal2_Akhir_2 ?>">
+        </td>
+      </tr>
+      <tr>
+        <td>JAM - 3</td>
+        <td width="5px">:</td>
+        <td>
+          <input name="nJamMurotal2_Awal_3" type="time" class="timeCfg" value="<?= $nJamMurotal2_Awal_3 ?>"> s/d
+          <input name="nJamMurotal2_Akhir_3" type="time" class="timeCfg" value="<?= $nJamMurotal2_Akhir_3 ?>">
+        </td>
+      </tr>
+      <tr>
+        <td>JAM - 4</td>
+        <td width="5px">:</td>
+        <td>
+          <input name="nJamMurotal2_Awal_4" type="time" class="timeCfg" value="<?= $nJamMurotal2_Awal_4 ?>"> s/d
+          <input name="nJamMurotal2_Akhir_4" type="time" class="timeCfg" value="<?= $nJamMurotal2_Akhir_4 ?>">
+        </td>
+      </tr>
+      <tr>
+        <td>JAM - 5</td>
+        <td width="5px">:</td>
+        <td>
+          <input name="nJamMurotal2_Awal_5" type="time" class="timeCfg" value="<?= $nJamMurotal2_Awal_5 ?>"> s/d
+          <input name="nJamMurotal2_Akhir_5" type="time" class="timeCfg" value="<?= $nJamMurotal2_Akhir_5 ?>">
         </td>
       </tr>
       <tr>

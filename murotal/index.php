@@ -27,13 +27,19 @@ function ListSurah()
             $vol = $nVolume;
             $rep = 1;
             $check = "";
+            $rep2 = 1;
+            $check2 = "";
             if (isset($vaList[$cSurah])) {
               $vol = $vaList[$cSurah]["volume"];
               $rep = $vaList[$cSurah]["repeat"];
               $check = $vaList[$cSurah]["check"] == 1 ? "checked" : "";
+
+              $rep2 = isset($vaList[$cSurah]["repeat2"]) ? $vaList[$cSurah]["repeat2"] : 1;
+              $cc = isset($vaList[$cSurah]["check2"]) ? $vaList[$cSurah]["check2"] : "";
+              $check2 = $cc == 1 ? "checked" : "";
             }
 
-            $vaSurah[$qari][$vaData[0]] = array("surah" => $surah, "path" => $cSurah, "volume" => $vol, "repeat" => $rep, "check" => $check);
+            $vaSurah[$qari][$vaData[0]] = array("surah" => $surah, "path" => $cSurah, "volume" => $vol, "repeat" => $rep, "check" => $check, "repeat2" => $rep2, "check2" => $check2);
           }
         }
       }
@@ -58,10 +64,10 @@ function ListSurah()
       <thead id="tableHeader" class="tableHeader">
         <tr>
           <th width="60px">No</th>
-          <th width="60px"></th>
           <th>Surat</th>
-          <th width="100px">Repeat</th>
           <th width="150px">Volume</th>
+          <th width="60px" colspan="2"> Murotal - I</th>
+          <th width="60px" colspan="2"> Murotal - II</th>
         </tr>
       </thead>
       <tbody id="bodytable">
@@ -72,20 +78,26 @@ function ListSurah()
           $x++;
           echo ("
             <tr style='background-color: blue;color:white'>
-            <td></td>
+            <td onClick='setupDisplay($x);' colspan='3'><strong>$qari</strong></td>            
             <td style='text-align:center'><input class='ckBox' type='checkbox' id='status_id_$x' onclick='checkall(this);'></td>
-            <td onClick='setupDisplay($x);' colspan='3'><strong>$qari</strong></td>
+            <td style='text-align:center'><strong>Repeat</strong></td>
+
+            <td style='text-align:center'><input class='ckBox' type='checkbox' id='status2_id_$x' onclick='checkall(this);'></td>
+            <td style='text-align:center'><strong>Repeat</strong></td>
             </tr>
           ");
           foreach ($vaSurah as $key => $value) {
             $id = "id_" . $x . "_" . $key;
             echo ("
             <tr class='qari_$x'>
-            <td id='$id' style='text-align:center'>$key</td>
-            <td style='text-align:center'><input class='ckBox' type='checkbox' {$value['check']} id='status_$id'><input type='hidden' id='cPath_$id' value='{$value['path']}'></td>
+            <td id='$id' style='text-align:center'>$key</td>            
             <td>{$value['surah']}</td>
-            <td style='text-align:center'><input min='1' max='100' type='number' class='numCfg' id='repeat_$id' value='{$value['repeat']}'></td>
             <td style='text-align:center'><input min='1' max='100' type='number' class='numCfg' id='volume_$id' value='{$value['volume']}'>&nbsp;%</td>
+            <td style='text-align:center'><input class='ckBox' type='checkbox' {$value['check']} id='status_$id'><input type='hidden' id='cPath_$id' value='{$value['path']}'></td>
+            <td style='text-align:center'><input min='1' max='100' type='number' class='numCfg' id='repeat_$id' value='{$value['repeat']}'></td>
+
+            <td style='text-align:center'><input class='ckBox' type='checkbox' {$value['check2']} id='status2_$id'></td>
+            <td style='text-align:center'><input min='1' max='100' type='number' class='numCfg' id='repeat2_$id' value='{$value['repeat2']}'></td>
             </tr>
             ");
           }

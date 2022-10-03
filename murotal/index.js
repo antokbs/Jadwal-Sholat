@@ -43,10 +43,12 @@ function cmdSave_onClick() {
     if (id != "") {
       nCheck = getField("status_" + id, 0);
       nRepeat = getField("repeat_" + id, 1);
+      nCheck2 = getField("status2_" + id, 0);
+      nRepeat2 = getField("repeat2_" + id, 1);
       nVolume = getField("volume_" + id, 60);
       cPath = getField("cPath_" + id, "");
 
-      c += "&r_" + id + "=" + cPath + "," + nCheck + "," + nRepeat + "," + nVolume;
+      c += "&r_" + id + "=" + cPath + "," + nCheck + "," + nRepeat + "," + nVolume + "," + nCheck2 + "," + nRepeat2;
     }
   }
   if (confirm("Data Disimpan ?")) {
