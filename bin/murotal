@@ -42,7 +42,6 @@ function PlayMurotal()
         if ($value["check"] == 1) {
           for ($n = 0; $n < $value["repeat"]; $n++) {
             if (is_dir($surat)) {
-              $cMurotalPeriode = GetMurotalPeriode();
               $vaAyat = GetAyat($surat);
               foreach ($vaAyat as $ayat) {
                 $mp3 = "$surat/$ayat";
@@ -53,6 +52,7 @@ function PlayMurotal()
                     CheckStatus();
                     $vaData = ["ayat" => $mp3, "datetime" => time()];
                     file_put_contents(GetData("ayat" . $cMurotalPeriode . ".txt"), json_encode($vaData));
+                    file_put_contents(GetData("ayat_aktif.txt"), json_encode($vaData));
 
                     // Check Kalau Data Surat Berubah akan kita Refresh Ulang
                     if ($md5 <> GetMD5Surat($cMurotalPeriode)) return true;
@@ -65,6 +65,9 @@ function PlayMurotal()
                   }
                 }
               }
+
+              // Jika Periode Berubah Maka Kita Refresh Ulang.
+              if ($cMurotalPeriode <> GetMurotalPeriode()) return true;
             }
           }
         }

@@ -101,7 +101,7 @@ function TerbitStart()
 
 function CheckAyat()
 {
-  $cFile = GetData("ayat.txt");
+  $cFile = GetData("ayat_aktif.txt");
   $cStatus = GetStatusMurotal() ? "start" : "stop";
   $vaData = [
     "ayat" => "",
