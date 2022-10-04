@@ -22,6 +22,7 @@ function PlayMurotal()
 {
   // Ambil Posisi Terakhir
   $cMurotalPeriode = GetMurotalPeriode();
+  $lChangePeriode = false;
   $md5 = GetMD5Surat($cMurotalPeriode);
   $cAyatTerakhir = "";
   $cFileAyat = GetData("ayat" . $cMurotalPeriode . ".txt");
@@ -55,7 +56,7 @@ function PlayMurotal()
                     file_put_contents(GetData("ayat_aktif.txt"), json_encode($vaData));
 
                     // Check Kalau Data Surat Berubah akan kita Refresh Ulang
-                    if ($md5 <> GetMD5Surat($cMurotalPeriode)) return true;
+                    if ($md5 <> GetMD5Surat($cMurotalPeriode) || $lChangePeriode) return true;
 
                     // Atur Volume Sesuai Configurasi
                     shell_exec("amixer set Master,0 " . $value["volume"] . "%");
@@ -67,7 +68,7 @@ function PlayMurotal()
               }
 
               // Jika Periode Berubah Maka Kita Refresh Ulang.
-              if ($cMurotalPeriode <> GetMurotalPeriode()) return true;
+              $lChangePeriode = $cMurotalPeriode <> GetMurotalPeriode();
             }
           }
         }
