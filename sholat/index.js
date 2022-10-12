@@ -18,7 +18,7 @@ function LoadForm(url) {
 
 function jadwalSholat(d) {
   prayTimes.setMethod("INDONESIA");
-  var vaKoordinat = GetCfg("cKoordinat", "0,0").split(",");
+  let vaKoordinat = GetCfg("cKoordinat", "0,0").split(",");
 
   if (vaKoordinat.length < 2) vaKoordinat[1] = 0;
   vaKoordinat[0] = parseFloat(vaKoordinat[0]);
@@ -26,8 +26,8 @@ function jadwalSholat(d) {
 
   // Jika Sudah Jam 20 Keatas Kita Lihat Jadwal Sholat Besok nya.
   let n = d.getHours() >= 20 ? 1 : 0;
-  var d1 = new Date(d.getFullYear(), d.getMonth(), d.getDate() + n, d.getHours(), d.getMinutes(), d.getSeconds());
-  var times = prayTimes.getTimes(d1, vaKoordinat, Math.floor(GetCfg("nTimeZone", 7)));
+  let d1 = new Date(d.getFullYear(), d.getMonth(), d.getDate() + n, d.getHours(), d.getMinutes(), d.getSeconds());
+  let times = prayTimes.getTimes(d1, vaKoordinat, Math.floor(GetCfg("nTimeZone", 7)));
 
   vaJadwal.subuh.adzan = Time2Menit(times.fajr) + 2 + Math.floor(GetCfg("nSubuh", 0));
   vaJadwal.terbit.adzan = Time2Menit(times.sunrise) + 2;
@@ -256,11 +256,8 @@ function showTime() {
   var nMenit = (d.getHours() * 60) + d.getMinutes();
   if (vaIqomah.sholat !== "" && nMenit >= vaIqomah.start && nMenit <= vaIqomah.end) {
     var nDetik = (vaIqomah.end * 60) - (nMenit * 60) - d.getSeconds();
-    var cell = _id("cell" + vaIqomah.sholat);
     var cellTitle = _id("cell" + vaIqomah.sholat + "-Title");
     if (nDetik >= 0) {
-      //if (cell !== null) cell.innerText = "-" + Menit2Time(nDetik);
-      //if (cellTitle !== null) cellTitle.innerText = "Iqomah";
       if (nDetik == 0) {
         ajax("", "IqomahStart", "", function (cData) {
           console.log(cData);
