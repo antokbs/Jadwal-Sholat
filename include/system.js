@@ -25,7 +25,7 @@ function MyDate() {
   var d = new Date();
 
   /* 
-  * Timezone sesuai yang di Setting di config Jadiman Menit  
+  * Timezone sesuai yang di Setting di config Jadikan Menit  
   * Kita tambah dengan Timezone yang ada di Komputer
   * Ini supaya kita bisa setting timezone tanpa harus merubah timezone komputer
   */

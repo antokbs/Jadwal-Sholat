@@ -24,7 +24,10 @@ function jadwalSholat(d) {
   vaKoordinat[0] = parseFloat(vaKoordinat[0]);
   vaKoordinat[1] = parseFloat(vaKoordinat[1]);
 
-  var times = prayTimes.getTimes(d, vaKoordinat, Math.floor(GetCfg("nTimeZone", 7)));
+  // Jika Sudah Jam 20 Keatas Kita Lihat Jadwal Sholat Besok nya.
+  let n = d.getHours() >= 20 ? 1 : 0;
+  var d1 = new Date(d.getFullYear(), d.getMonth(), d.getDate() + n, d.getHours(), d.getMinutes(), d.getSeconds());
+  var times = prayTimes.getTimes(d1, vaKoordinat, Math.floor(GetCfg("nTimeZone", 7)));
 
   vaJadwal.subuh.adzan = Time2Menit(times.fajr) + 2 + Math.floor(GetCfg("nSubuh", 0));
   vaJadwal.terbit.adzan = Time2Menit(times.sunrise) + 2;
