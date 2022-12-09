@@ -4,6 +4,27 @@ function checkall(source) {
     if (checkboxes[i].id.substring(0, source.id.length) == source.id && checkboxes[i] != source)
       checkboxes[i].checked = source.checked;
   }
+  CheckAutoVolume();
+}
+
+function CheckAutoVolume() {
+  var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  for (var i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].id.substring(0, 8) == "vol_auto") {
+      ClickVolAuto(checkboxes[i]);
+    }
+  }
+}
+
+function ClickVolAuto(field) {
+  let name = "volume" + field.id.substring(8);
+  let i = document.getElementById(name);
+
+  if (i !== null) {
+    i.readOnly = field.checked;
+    i.style.backgroundColor = field.checked ? "#dedede" : "";
+    i.value = field.checked ? document.form1.nMurotal_Volume.value : i.value;
+  }
 }
 
 function setupDisplay(n) {
@@ -46,9 +67,10 @@ function cmdSave_onClick() {
       nCheck2 = getField("status2_" + id, 0);
       nRepeat2 = getField("repeat2_" + id, 1);
       nVolume = getField("volume_" + id, 60);
+      nVol_Auto = getField("vol_auto_" + id, 0);
       cPath = getField("cPath_" + id, "");
 
-      c += "&r_" + id + "=" + cPath + "," + nCheck + "," + nRepeat + "," + nVolume + "," + nCheck2 + "," + nRepeat2;
+      c += "&r_" + id + "=" + cPath + "," + nCheck + "," + nRepeat + "," + nVolume + "," + nCheck2 + "," + nRepeat2 + "," + nVol_Auto;
     }
   }
   if (confirm("Data Disimpan ?")) {

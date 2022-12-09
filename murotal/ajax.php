@@ -30,13 +30,13 @@ function SaveData($va)
   $data_all = array();
   foreach ($va as $value) {
     $cell = explode(",", $value);
-    $data_all[$cell[0]] = array("check" => $cell[1], "repeat" => $cell[2], "volume" => $cell[3], "check2" => $cell[4], "repeat2" => $cell[5]);
+    $data_all[$cell[0]] = array("check" => $cell[1], "repeat" => $cell[2], "volume" => $cell[3], "check2" => $cell[4], "repeat2" => $cell[5], "vol_auto" => $cell[6]);
 
     // Jika Surat Untuk Muratal 1 Kita Check
-    if ($cell[1] == 1) $data[$cell[0]] = array("check" => $cell[1], "repeat" => $cell[2], "volume" => $cell[3]);
+    if ($cell[1] == 1) $data[$cell[0]] = array("check" => $cell[1], "repeat" => $cell[2], "volume" => $cell[3], "vol_auto" => $cell[6]);
 
     // Jika Surat Untuk Murotal 2 Kita Check
-    if ($cell[4] == 1) $data2[$cell[0]] = array("check" => $cell[4], "repeat" => $cell[5], "volume" => $cell[3]);
+    if ($cell[4] == 1) $data2[$cell[0]] = array("check" => $cell[4], "repeat" => $cell[5], "volume" => $cell[3], "vol_auto" => $cell[6]);
   }
   file_put_contents($cFileConfig, json_encode($data));
   file_put_contents($cFileConfig2, json_encode($data2));

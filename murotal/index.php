@@ -29,17 +29,21 @@ function ListSurah()
             $check = "";
             $rep2 = 1;
             $check2 = "";
+            $vol_auto = "";
             if (isset($vaList[$cSurah])) {
               $vol = $vaList[$cSurah]["volume"];
               $rep = $vaList[$cSurah]["repeat"];
               $check = $vaList[$cSurah]["check"] == 1 ? "checked" : "";
+
+              $vol_auto = isset($vaList[$cSurah]["vol_auto"]) ? $vaList[$cSurah]["vol_auto"] : "";
+              $vol_auto = $vol_auto == 1 ? "checked" : "";
 
               $rep2 = isset($vaList[$cSurah]["repeat2"]) ? $vaList[$cSurah]["repeat2"] : 1;
               $cc = isset($vaList[$cSurah]["check2"]) ? $vaList[$cSurah]["check2"] : "";
               $check2 = $cc == 1 ? "checked" : "";
             }
 
-            $vaSurah[$qari][$vaData[0]] = array("surah" => $surah, "path" => $cSurah, "volume" => $vol, "repeat" => $rep, "check" => $check, "repeat2" => $rep2, "check2" => $check2);
+            $vaSurah[$qari][$vaData[0]] = array("surah" => $surah, "path" => $cSurah, "vol_auto" => $vol_auto, "volume" => $vol, "repeat" => $rep, "check" => $check, "repeat2" => $rep2, "check2" => $check2);
           }
         }
       }
@@ -58,14 +62,14 @@ function ListSurah()
   <script type="text/javascript" src="<?= $url ?>../include/system.js"></script>
 </head>
 
-<body>
+<body onload="CheckAutoVolume();">
   <form name="form1">
     <table id="surah" class="display" style="width:100%">
       <thead id="tableHeader" class="tableHeader">
         <tr>
           <th width="60px">No</th>
           <th>Surat</th>
-          <th width="150px">Volume</th>
+          <th width="150px" colspan="2">Volume Auto</th>
           <th width="60px" colspan="2"> Murotal - I</th>
           <th width="60px" colspan="2"> Murotal - II</th>
         </tr>
@@ -78,7 +82,9 @@ function ListSurah()
           $x++;
           echo ("
             <tr style='background-color: blue;color:white'>
-            <td onClick='setupDisplay($x);' colspan='3'><strong>$qari</strong></td>            
+            <td onClick='setupDisplay($x);' colspan='2'><strong>$qari</strong></td>            
+            <td style='text-align:center'><input class='ckBox' type='checkbox' id='vol_auto_id_$x' onclick='checkall(this);'></td>
+            <td style='text-align:center'><strong>Volume</strong></td>
             <td style='text-align:center'><input class='ckBox' type='checkbox' id='status_id_$x' onclick='checkall(this);'></td>
             <td style='text-align:center'><strong>Repeat</strong></td>
 
@@ -92,6 +98,7 @@ function ListSurah()
             <tr class='qari_$x'>
             <td id='$id' style='text-align:center'>$key</td>            
             <td>{$value['surah']}</td>
+            <td style='text-align:center'><input onclick='ClickVolAuto(this);' class='ckBox' type='checkbox' {$value['vol_auto']} id='vol_auto_$id'></td>
             <td style='text-align:center'><input min='1' max='100' type='number' class='numCfg' id='volume_$id' value='{$value['volume']}'>&nbsp;%</td>
             <td style='text-align:center'><input class='ckBox' type='checkbox' {$value['check']} id='status_$id'><input type='hidden' id='cPath_$id' value='{$value['path']}'></td>
             <td style='text-align:center'><input min='1' max='100' type='number' class='numCfg' id='repeat_$id' value='{$value['repeat']}'></td>
@@ -107,6 +114,7 @@ function ListSurah()
     </table>
     <div class="divButton">
       <input class="cmdButton" type="button" value="Simpan" name="cmdSave" onclick="cmdSave_onClick();">
+      <input type="hidden" value="<?php echo (GetConfig("nMurotal_Volume", 60)) ?>" name="nMurotal_Volume">
     </div>
   </form>
 </body>
