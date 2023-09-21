@@ -6,7 +6,7 @@ $url = GetURL();
 $cKoordinat = GetConfig("cKoordinat", "0,0");
 $nTimezone = GetConfig("nTimeZone", 7);
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 
 <head>
